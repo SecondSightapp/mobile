@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../components/navbar.dart';
 
@@ -48,11 +47,11 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: HomePageBody(),
+      body: const HomePageBody(),
       bottomNavigationBar: NavBar(
         selectedIndex: 0,
         onItemTapped: (index) {
-          
+
         }
       )
     );
@@ -100,11 +99,13 @@ class HomePageBody extends StatelessWidget {
             ),
           ),
         ),
-        ListView(
-          scrollDirection: Axis.horizontal,
-          children: const <Widget>[
-            // add card components here
-          ],
+        Expanded(
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            children: const <Widget>[
+              // add card components here
+            ],
+          ),
         ),
       ],
     );
