@@ -15,6 +15,7 @@ class JournalCard extends StatelessWidget {
       height: 182,
       child: Card(
         color: Colors.white,
+        elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

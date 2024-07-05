@@ -89,7 +89,7 @@ class HomePageBody extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 120,
+            height: 140,
             child: Column(
               children: [
                 const Row(
@@ -122,7 +122,7 @@ class HomePageBody extends StatelessWidget {
           ),
           // add calendar component here
           SizedBox(
-            height: 140,
+            height: 120,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
