@@ -1,15 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-
-// purple theme color
-const themePurple = Color.fromRGBO(56, 48, 115, 1);
+import '../themes/source_colors.dart';
 
 class NavBar extends StatefulWidget {
   final int selectedIndex;
   final ValueChanged<int> onItemTapped;
 
-  NavBar({required this.selectedIndex, required this.onItemTapped});
+  const NavBar({super.key, required this.selectedIndex, required this.onItemTapped});
 
   @override
   _NavBarState createState() => _NavBarState();
