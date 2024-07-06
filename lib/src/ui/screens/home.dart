@@ -5,13 +5,35 @@ import '../components/navbar.dart';
 import '../themes/source_colors.dart';
 import '../components/star.dart';
 
+// the list of journal cards
+const journalCards = [
+  // keep the first one, use to create new cards
+  JournalCard(
+    title: 'view library',
+    content: 'create new...',
+  ),
+  JournalCard(
+    title: 'Entry 1',
+    content: 'excerpt...',
+  ),
+  JournalCard(
+    title: 'Entry 2',
+    content: 'excerpt...',
+  ),
+  JournalCard(
+    title: 'Entry 3',
+    content: 'excerpt...',
+  ),
+];
 
+// home page layout
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // app bar with title and buttons for menu and settings
       appBar: AppBar(
         title: Center(
           child: Text(
@@ -49,12 +71,10 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: const HomePageBody(),
+      // navbar
       bottomNavigationBar: NavBar(
         selectedIndex: 0,
-        onItemTapped: (index) {
-
-        }
-      )
+      ),
     );
   }
 }
@@ -70,6 +90,7 @@ class HomePageBody extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          // "how are you feeling today?" prompt
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Padding(
@@ -88,10 +109,12 @@ class HomePageBody extends StatelessWidget {
               ),
             ),
           ),
+          // stars that the user can click on to choose a mood
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
+                // display top 3 moods
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -101,6 +124,7 @@ class HomePageBody extends StatelessWidget {
                     Star(color: Color.fromRGBO(216, 160, 156, 1)),
                   ],
                 ),
+                // "view more" button to view all moods
                 Padding(
                   padding: const EdgeInsets.only(right: 50.0, top: 8.0),
                   child: Align(
@@ -138,6 +162,7 @@ class HomePageBody extends StatelessWidget {
               ),
             )
           ),
+          // "start journaling" prompt
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.05,
             child: Center(
@@ -153,31 +178,12 @@ class HomePageBody extends StatelessWidget {
               ),
             ),
           ),
+          // create a new entry and view most recent entries
           Expanded(
-            child: Padding(
+            child: ListView(
               padding: const EdgeInsets.all(8.0),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: const <Widget>[
-                  // keep the first one, use to create new cards
-                  JournalCard(
-                    title: 'view library',
-                    content: 'create new...'
-                  ),
-                  JournalCard(
-                    title: 'Entry 1',
-                    content: 'excerpt...'
-                  ),
-                  JournalCard(
-                    title: 'Entry 2',
-                    content: 'excerpt...'
-                  ),
-                  JournalCard(
-                    title: 'Entry 3',
-                    content: 'excerpt...'
-                  ),
-                ],
-              ),
+              scrollDirection: Axis.horizontal,
+              children: journalCards,
             ),
           ),
         ],

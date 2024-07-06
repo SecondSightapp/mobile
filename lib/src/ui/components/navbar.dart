@@ -2,48 +2,61 @@ import 'package:flutter/material.dart';
 import '../themes/source_colors.dart';
 
 class NavBar extends StatefulWidget {
-  final int selectedIndex;
-  final ValueChanged<int> onItemTapped;
+  int selectedIndex;
 
-  const NavBar({super.key, required this.selectedIndex, required this.onItemTapped});
+  NavBar({super.key, required this.selectedIndex});
 
   @override
   _NavBarState createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
+  void _onItemTapped(int index) {
+    setState(() => widget.selectedIndex = index);
+  }
+
   @override
   Widget build(BuildContext context) {
+    // icons for navbar, filled in if selected, otherwise outlined
+    
+    Icon homepage = Icon(
+      widget.selectedIndex == 0 ? Icons.home : Icons.home_outlined,
+      color: themePurple,
+    );
+
+    Icon starboard = Icon(
+      widget.selectedIndex == 1 ? Icons.star : Icons.star_outline,
+      color: themePurple,
+    );
+
+    Icon journal = Icon(
+      widget.selectedIndex == 2 ? Icons.book : Icons.book_outlined,
+      color: themePurple,
+    );
+
+    Icon calendar = Icon(
+      widget.selectedIndex == 3 ? Icons.calendar_month : Icons.calendar_month_outlined,
+      color: themePurple,
+    );
+
     return NavigationBar(
       selectedIndex: widget.selectedIndex,
-      onDestinationSelected: widget.onItemTapped,
-      destinations: const <NavigationDestination> [
+      onDestinationSelected: _onItemTapped,
+      destinations: <NavigationDestination> [
         NavigationDestination(
-          icon: Icon(
-            Icons.home,
-            color: themePurple,
-          ),
+          icon: homepage,
           label: "Home",
         ),
         NavigationDestination(
-          icon: Icon(
-            Icons.star_outline,
-            color: themePurple,
-          ),
+          icon: starboard,
           label: "Starboard",
         ),
         NavigationDestination(
-          icon: Icon(
-            Icons.book_outlined,
-            color: themePurple,
-          ),
+          icon: journal,
           label: "Journal",
         ),
         NavigationDestination(
-          icon: Icon(
-            Icons.calendar_month_outlined,
-            color: themePurple,
-          ),
+          icon: calendar,
           label: "Calendar",
         ),
       ],
