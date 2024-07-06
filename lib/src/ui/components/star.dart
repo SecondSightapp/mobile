@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../themes/source_colors.dart';
 
 class Star extends StatelessWidget {
   final Color color;
@@ -10,8 +8,8 @@ class Star extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 89,
-      height: 85,
+      width: MediaQuery.of(context).size.height * 0.1,
+      height: MediaQuery.of(context).size.height * 0.1,
       decoration: ShapeDecoration(
         color: color,
         shape: const StarBorder(

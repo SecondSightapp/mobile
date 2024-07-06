@@ -71,9 +71,9 @@ class HomePageBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: 100,
+            height: MediaQuery.of(context).size.height * 0.15,
             child: Padding(
-              padding: const EdgeInsets.only(top: 25),
+              padding: const EdgeInsets.only(top: 50),
               child: Center(
                 child: Text(
                   'how are you feeling today?',
@@ -89,7 +89,7 @@ class HomePageBody extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 140,
+            height: MediaQuery.of(context).size.height * 0.15,
             child: Column(
               children: [
                 const Row(
@@ -122,7 +122,7 @@ class HomePageBody extends StatelessWidget {
           ),
           // add calendar component here
           SizedBox(
-            height: 120,
+            height: MediaQuery.of(context).size.height * 0.175,
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
@@ -139,7 +139,7 @@ class HomePageBody extends StatelessWidget {
             )
           ),
           SizedBox(
-            height: 50,
+            height: MediaQuery.of(context).size.height * 0.05,
             child: Center(
               child: Text(
                 'start journaling',
