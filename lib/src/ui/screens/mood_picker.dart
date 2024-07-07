@@ -89,17 +89,79 @@ class MoodPicker extends StatelessWidget {
   }
 }
 
-class MoodPickerBody extends StatelessWidget {
+class MoodPickerBody extends StatefulWidget {
   const MoodPickerBody({super.key});
 
   @override
+  State<MoodPickerBody> createState() => _MoodPickerBodyState();
+}
+
+class _MoodPickerBodyState extends State<MoodPickerBody> {
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToTop() {
+    _scrollController.animateTo(
+      0.0,
+      duration: const Duration(seconds: 1),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 3,
-      crossAxisSpacing: 30.0,
-      mainAxisSpacing: 30.0,
-      padding: const EdgeInsets.all(25.0),
-      children: stars,
+    return Scaffold(
+      body: Column(
+        children: [
+          const MoodCounter(),
+          Expanded(
+            child: GridView.builder(
+              padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 12.0, bottom: 12.0),
+              controller: _scrollController,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 25.0,
+                mainAxisSpacing: 25.0,
+              ),
+              itemCount: stars.length,
+              itemBuilder: (context, index) {
+                return stars[index];
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _scrollToTop,
+        child: const Icon(Icons.arrow_upward),
+      ),
+    );
+  }
+}
+
+class MoodCounter extends StatefulWidget {
+  const MoodCounter({super.key});
+
+  @override
+  State<MoodCounter> createState() => _MoodCounterState();
+}
+
+class _MoodCounterState extends State<MoodCounter> {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.04,
+      child: Center(
+        child: Text(
+          "${stars.length}/50",
+          style: GoogleFonts.lexend(
+            textStyle: const TextStyle(
+              color: themePurple,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
