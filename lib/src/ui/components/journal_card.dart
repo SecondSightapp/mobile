@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:secondsight/src/ui/components/journal_popup.dart';
 import '../themes/source_colors.dart';
 
 class JournalCard extends StatelessWidget {
@@ -8,21 +9,30 @@ class JournalCard extends StatelessWidget {
 
   const JournalCard({super.key, required this.title, required this.content});
 
+  void _showEntry(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return const JournalPopup();
+      }
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 224,
       height: 182,
-      child: InkWell(
-        onTap: () {
-          // open the card's contents
-        },
-        child: Card(
-          color: Colors.white,
-          elevation: 4,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
+      child: Card(
+        color: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: InkWell(
+          onTap: () {
+            _showEntry(context);
+          },
           child: Column(
             children: [
               Padding(

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Star extends StatelessWidget {
@@ -7,9 +8,9 @@ class Star extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
-        // set today's mood
+        print('star clicked');
       },
       child: Container(
         width: MediaQuery.of(context).size.width * 0.25,
