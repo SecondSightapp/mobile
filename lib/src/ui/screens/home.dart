@@ -5,7 +5,7 @@ import 'package:secondsight/src/ui/screens/mood_picker.dart';
 import '../components/navbar.dart';
 import '../themes/source_colors.dart';
 import '../components/star.dart';
-import '../components/calendar.dart';
+import '../components/calendar_week.dart';
 
 // the list of journal cards
 const journalCards = [
@@ -27,6 +27,8 @@ const journalCards = [
     content: 'excerpt...',
   ),
 ];
+
+Map<String, String> journalData = {};
 
 // home page layout
 class HomePage extends StatelessWidget {
@@ -94,9 +96,9 @@ class HomePageBody extends StatelessWidget {
         children: [
           // "how are you feeling today?" prompt
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
+            height: MediaQuery.of(context).size.height * 0.125,
             child: Padding(
-              padding: const EdgeInsets.only(top: 50),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.025),
               child: Center(
                 child: Text(
                   'how are you feeling today?',
@@ -112,70 +114,60 @@ class HomePageBody extends StatelessWidget {
             ),
           ),
           // stars that the user can click on to choose a mood
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.175,
-            child: Column(
-              children: [
-                // display top 3 moods
-                const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Star(color: Color.fromRGBO(181, 200, 229, 1)),
-                    Star(color: Color.fromRGBO(245, 229, 198, 1)),
-                    Star(color: Color.fromRGBO(216, 160, 156, 1)),
-                  ],
-                ),
-                // "view more" button to view all moods
-                Padding(
-                  padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.075),
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => const MoodPicker()),
-                        );
-                      },
-                      child: Text(
-                        'view more...',
-                        style: GoogleFonts.lexend(
-                          textStyle: const TextStyle(
-                            color: themePurple,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ),
+          // display top 3 moods
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Star(color: Color.fromRGBO(181, 200, 229, 1)),
+              Star(color: Color.fromRGBO(245, 229, 198, 1)),
+              Star(color: Color.fromRGBO(216, 160, 156, 1)),
+            ],
+          ),
+          // "view more" button to view all moods
+          Padding(
+            padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.07),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const MoodPicker()),
+                  );
+                },
+                child: Text(
+                  'view more...',
+                  style: GoogleFonts.lexend(
+                    textStyle: const TextStyle(
+                      color: themePurple,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-          // add calendar component here
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.175,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Color.fromRGBO(171, 179, 209, 0.7),
-                      offset: Offset(5, 5),
-                    ),
-                  ],
-                ),
-                // child: const Calendar(),
+          // calendar component
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 12.0),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(171, 179, 209, 0.7),
+                    offset: Offset(5, 5),
+                  ),
+                ],
               ),
-            )
+              child: const CalendarWeek(),
+            ),
           ),
           // "start journaling" prompt
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.05,
+            height: MediaQuery.of(context).size.height * 0.06,
             child: Center(
               child: Text(
                 'start journaling',
