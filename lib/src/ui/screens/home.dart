@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/components/journal_card.dart';
+import 'package:secondsight/src/ui/screens/mood_picker.dart';
 import '../components/navbar.dart';
 import '../themes/source_colors.dart';
 import '../components/star.dart';
+import '../components/calendar.dart';
 
 // the list of journal cards
 const journalCards = [
@@ -111,7 +113,7 @@ class HomePageBody extends StatelessWidget {
           ),
           // stars that the user can click on to choose a mood
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.15,
+            height: MediaQuery.of(context).size.height * 0.175,
             child: Column(
               children: [
                 // display top 3 moods
@@ -126,16 +128,24 @@ class HomePageBody extends StatelessWidget {
                 ),
                 // "view more" button to view all moods
                 Padding(
-                  padding: const EdgeInsets.only(right: 50.0, top: 8.0),
+                  padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.075),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      'view more...',
-                      style: GoogleFonts.lexend(
-                        textStyle: const TextStyle(
-                          color: themePurple,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const MoodPicker()),
+                        );
+                      },
+                      child: Text(
+                        'view more...',
+                        style: GoogleFonts.lexend(
+                          textStyle: const TextStyle(
+                            color: themePurple,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
                     ),
@@ -148,7 +158,7 @@ class HomePageBody extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.175,
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.only(left: 20.0, right: 20.0, bottom: 8.0),
               child: Container(
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -159,6 +169,7 @@ class HomePageBody extends StatelessWidget {
                     ),
                   ],
                 ),
+                // child: const Calendar(),
               ),
             )
           ),

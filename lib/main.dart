@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:secondsight/src/ui/components/star.dart';
 import 'package:secondsight/src/ui/screens/home.dart';
-import 'package:secondsight/src/ui/screens/login.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:secondsight/src/ui/screens/mood_picker.dart';
 
 void main() {
   runApp(const MyApp());

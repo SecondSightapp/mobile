@@ -18,7 +18,7 @@ class _NavBarState extends State<NavBar> {
   @override
   Widget build(BuildContext context) {
     // icons for navbar, filled in if selected, otherwise outlined
-    
+
     Icon homepage = Icon(
       widget.selectedIndex == 0 ? Icons.home : Icons.home_outlined,
       color: themePurple,
