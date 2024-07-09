@@ -3,20 +3,19 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/components/journal_popup.dart';
 import '../themes/source_colors.dart';
 
-class JournalCard extends StatelessWidget {
-  final String title;
-  final String content;
+class JournalCard extends StatefulWidget {
+  String title;
+  String content;
 
-  const JournalCard({super.key, required this.title, required this.content});
+  JournalCard({super.key, this.title = '', this.content = ''});
 
-  void _showEntry(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const JournalPopup();
-      }
-    );
-  }
+  @override
+  State<JournalCard> createState() => _JournalCardState();
+}
+
+class _JournalCardState extends State<JournalCard> {
+  String _title = '';
+  String _content = '';
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +29,22 @@ class JournalCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: InkWell(
-          onTap: () {
-            _showEntry(context);
+          onTap: () async {
+            final result = await showDialog<Map<String, String>>(
+              context: context,
+              builder: (BuildContext context) {
+                return const JournalPopup();
+              }
+            );
+
+            if (result != null) {
+              setState(() {
+                _title = result['title'] ?? '';
+                _content = result['content'] ?? '';
+              });
+              print(_title);
+              print(_content);
+            }
           },
           child: Column(
             children: [
@@ -40,7 +53,7 @@ class JournalCard extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    title,
+                    widget.title,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 14,
@@ -54,7 +67,7 @@ class JournalCard extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    content.length > 20 ? '${content.substring(0, 20)}...' : content,
+                    widget.content.length > 20 ? '${widget.content.substring(0, 20)}...' : widget.content,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 28,

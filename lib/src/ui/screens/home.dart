@@ -8,7 +8,7 @@ import '../components/star.dart';
 import '../components/calendar_week.dart';
 
 // the list of journal cards
-const journalCards = [
+var journalCards = [
   // keep the first one, use to create new cards
   JournalCard(
     title: 'view library',

@@ -70,7 +70,10 @@ class CalendarWeek extends StatelessWidget {
                 onPressed: () {
 
                 },
-                child: const Icon(Icons.keyboard_arrow_left),
+                child: const Icon(
+                  Icons.keyboard_arrow_left,
+                  color: themePurple,
+                ),
               ),
               Text(
                 months[DateTime.now().month - 1],
@@ -86,7 +89,10 @@ class CalendarWeek extends StatelessWidget {
                 onPressed: () {
                   
                 },
-                child: const Icon(Icons.keyboard_arrow_right),
+                child: const Icon(
+                  Icons.keyboard_arrow_right,
+                  color: themePurple,
+                ),
               ),
             ],
           ),
