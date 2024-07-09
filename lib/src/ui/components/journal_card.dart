@@ -4,10 +4,10 @@ import 'package:secondsight/src/ui/components/journal_popup.dart';
 import '../themes/source_colors.dart';
 
 class JournalCard extends StatefulWidget {
-  String title;
-  String content;
+  final String title;
+  final String content;
 
-  JournalCard({super.key, this.title = '', this.content = ''});
+  const JournalCard({super.key, this.title = '', this.content = ''});
 
   @override
   State<JournalCard> createState() => _JournalCardState();
