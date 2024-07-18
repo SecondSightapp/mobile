@@ -33,7 +33,7 @@ class _JournalCardState extends State<JournalCard> {
             final result = await showDialog<Map<String, String>>(
               context: context,
               builder: (BuildContext context) {
-                return const JournalPopup();
+                return JournalPopup(title: widget.title, content: widget.content);
               }
             );
 
