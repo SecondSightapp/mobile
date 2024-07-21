@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:secondsight/src/ui/components/star.dart';
 import 'package:secondsight/src/ui/screens/home.dart';
+import 'package:secondsight/src/ui/screens/loading_screen.dart';
+import 'package:secondsight/src/ui/screens/login.dart';
 import 'package:secondsight/src/ui/screens/mood_picker.dart';
 
 void main() {
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(56, 48, 115, 1)),
       ),
       // making this home for now for testing purposes, will be login page otherwise and should only go to homepage if logged in
-      home: const HomePage(),
+      home: const LoadingScreen(),
     );
   }
 }
