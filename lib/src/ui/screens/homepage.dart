@@ -109,7 +109,7 @@ class Homepage extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const CalendarWeek(),
+              child: CalendarWeek(),
             ),
           ),
           // "start journaling" prompt
