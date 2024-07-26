@@ -53,8 +53,8 @@ class JournalPopup extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: const Icon(Icons.cancel),
-            label: const Text('cancel'),
+            icon: const Icon(Icons.close),
+            label: const Text('close'),
           ),
         ]
       ),

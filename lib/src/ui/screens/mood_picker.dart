@@ -2,39 +2,21 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import '../themes/source_colors.dart';
 import '../components/navbar.dart';
-import '../components/star.dart';
+import '../components/mood_star.dart';
 
 const stars = [
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(155, 167, 235, 1)),
-  Star(color: Color.fromRGBO(204, 204, 204, 1)),
-  Star(color: Color.fromRGBO(205, 156, 216, 1)),
-  Star(color: Color.fromRGBO(255, 213, 225, 1)),
-  Star(color: Color.fromRGBO(207, 241, 195, 1)),
-  Star(color: Color.fromRGBO(255, 202, 167, 1)),
-  Star(color: Color.fromRGBO(255, 211, 115, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(155, 167, 235, 1)),
-  Star(color: Color.fromRGBO(204, 204, 204, 1)),
-  Star(color: Color.fromRGBO(205, 156, 216, 1)),
-  Star(color: Color.fromRGBO(255, 213, 225, 1)),
-  Star(color: Color.fromRGBO(207, 241, 195, 1)),
-  Star(color: Color.fromRGBO(255, 202, 167, 1)),
-  Star(color: Color.fromRGBO(255, 211, 115, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(155, 167, 235, 1)),
-  Star(color: Color.fromRGBO(204, 204, 204, 1)),
-  Star(color: Color.fromRGBO(205, 156, 216, 1)),
-  Star(color: Color.fromRGBO(255, 213, 225, 1)),
-  Star(color: Color.fromRGBO(207, 241, 195, 1)),
-  Star(color: Color.fromRGBO(255, 202, 167, 1)),
-  Star(color: Color.fromRGBO(255, 211, 115, 1)),
+  MoodStar(mood: "sad"),
+  MoodStar(mood: "happy"),
+  MoodStar(mood: "angry"),
+  MoodStar(mood: "cool"),
+  MoodStar(mood: "neutral"),
+  MoodStar(mood: "worried"),
+  MoodStar(mood: "chill"),
+  MoodStar(mood: "disgusted"),
+  MoodStar(mood: "calm"),
+  MoodStar(mood: "delighted"),
+  MoodStar(mood: "naughty"),
+  MoodStar(mood: "annoyed"),
 ];
 
 class MoodPicker extends StatelessWidget {

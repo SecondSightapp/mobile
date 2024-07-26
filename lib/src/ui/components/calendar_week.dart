@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../themes/source_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import '../../data/mood_log.dart';
+import '../../data/moods.dart';
 
 final months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -12,14 +14,6 @@ final months = [
 final weekdays = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
-
-final moods = {
-  DateTime.utc(2024, 7, 21): const Color.fromRGBO(216, 160, 156, 1),
-  DateTime.utc(2024, 7, 22): const Color.fromRGBO(189, 172, 198, 1),
-  DateTime.utc(2024, 7, 23): const Color.fromRGBO(204, 226, 200, 1),
-  DateTime.utc(2024, 7, 24): const Color.fromRGBO(181, 200, 229, 1),
-  DateTime.utc(2024, 7, 25): const Color.fromRGBO(245, 229, 198, 1),
-};
 
 class CalendarWeek extends StatelessWidget {
   const CalendarWeek({super.key});
@@ -64,7 +58,7 @@ class CalendarWeek extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: moods[date] ?? const Color.fromRGBO(233, 233, 233, 1),
+        color: moods[moodLog[date]] ?? const Color.fromRGBO(233, 233, 233, 1),
       ),
       child: Center(
         child: display
