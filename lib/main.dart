@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/components/mood_star.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
@@ -9,27 +10,32 @@ import 'package:secondsight/src/ui/screens/starboard.dart';
 import 'package:secondsight/src/ui/screens/calendar.dart';
 import 'package:secondsight/src/ui/screens/mood_picker.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
+import 'package:provider/provider.dart';
+import 'package:secondsight/src/data/mood_state.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const SecondSightApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class SecondSightApp extends StatelessWidget {
+  const SecondSightApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Login Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(56, 48, 115, 1)),
+    return ChangeNotifierProvider(
+      create: (context) => MoodState(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Login Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(56, 48, 115, 1)),
+        ),
+        // making this home for now for testing purposes, will be login page otherwise and should only go to homepage if logged in
+        home: const MainPage(),
       ),
-      // making this home for now for testing purposes, will be login page otherwise and should only go to homepage if logged in
-      home: const MainPage(),
     );
   }
 }

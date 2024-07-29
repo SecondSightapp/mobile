@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../themes/source_colors.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
-import '../../data/mood_log.dart';
+import '../../data/mood_state.dart';
 import '../../data/moods.dart';
+import '../../constants.dart';
 
 final months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -15,9 +17,14 @@ final weekdays = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
 
-class CalendarWeek extends StatelessWidget {
+class CalendarWeek extends StatefulWidget {
   const CalendarWeek({super.key});
 
+  @override
+  State<CalendarWeek> createState() => _CalendarWeekState();
+}
+
+class _CalendarWeekState extends State<CalendarWeek> {
   Widget customDayBuilder(
     bool isSelectable,
     int index,
@@ -58,7 +65,7 @@ class CalendarWeek extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: moods[moodLog[date]] ?? const Color.fromRGBO(233, 233, 233, 1),
+        color: moods[moodState.moodLog[date]] ?? const Color.fromRGBO(233, 233, 233, 1),
       ),
       child: Center(
         child: display
@@ -68,6 +75,8 @@ class CalendarWeek extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final changeNotifier = Provider.of<MoodState>(context, listen: true);
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
