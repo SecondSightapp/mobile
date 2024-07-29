@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/screens/home.dart';
 import 'dart:async';
@@ -21,7 +20,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     super.initState();
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
 
-    // image switch every 1 second
+    // image switch every 2 second
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (!mounted) return;
       setState(() {
@@ -29,7 +28,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
       });
     });
 
-    // navigation to HomePage after 5 seconds
+    // navigation to HomePage after 8 seconds
     Future.delayed(const Duration(seconds: 10), () {
       if (mounted) {
         debugPrint("navigating to HomePage");
@@ -66,13 +65,13 @@ class _LoadingScreenState extends State<LoadingScreen> {
               duration: const Duration(seconds: 1),
               child: _showFirstImage
                   ? Image.asset(
-                      "assets/images/loading1.png",
+                      "assets/images/logo1.png",
                       key: const ValueKey(1),
                       width: 80,
                       height: 80,
                     )
                   : Image.asset(
-                      "assets/images/loading2.png",
+                      "assets/images/logo2.png",
                       key: const ValueKey(2),
                       width: 80,
                       height: 80,
