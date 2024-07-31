@@ -75,8 +75,6 @@ class _CalendarWeekState extends State<CalendarWeek> {
 
   @override
   Widget build(BuildContext context) {
-    final changeNotifier = Provider.of<MoodState>(context, listen: true);
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -104,6 +102,26 @@ class _CalendarWeekState extends State<CalendarWeek> {
           ),
           todayButtonColor: Colors.transparent,
           selectedDayButtonColor: Colors.transparent,
+          pageScrollPhysics: const ScrollPhysics(),
+          onCalendarChanged: (date) {
+            customDayBuilder(
+              true,
+              1,
+              true,
+              true,
+              false,
+              GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                  color: themePurple,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              false,
+              true,
+              date
+            );
+          },
         ),
       ),
     );

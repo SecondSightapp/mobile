@@ -1,14 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:secondsight/src/ui/components/mood_star.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
 import 'package:secondsight/src/ui/screens/journal.dart';
 import 'package:secondsight/src/ui/screens/starboard.dart';
 import 'package:secondsight/src/ui/screens/calendar.dart';
-import 'package:secondsight/src/ui/screens/mood_picker.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:secondsight/src/data/mood_state.dart';

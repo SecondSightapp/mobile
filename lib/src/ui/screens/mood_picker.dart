@@ -2,21 +2,21 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import '../themes/source_colors.dart';
 import '../components/navbar.dart';
-import '../components/mood_star.dart';
+import '../components/star.dart';
 
 const stars = [
-  MoodStar(mood: "sad"),
-  MoodStar(mood: "happy"),
-  MoodStar(mood: "angry"),
-  MoodStar(mood: "cool"),
-  MoodStar(mood: "neutral"),
-  MoodStar(mood: "worried"),
-  MoodStar(mood: "chill"),
-  MoodStar(mood: "disgusted"),
-  MoodStar(mood: "calm"),
-  MoodStar(mood: "delighted"),
-  MoodStar(mood: "naughty"),
-  MoodStar(mood: "annoyed"),
+  Star(mood: "sad"),
+  Star(mood: "happy"),
+  Star(mood: "angry"),
+  Star(mood: "cool"),
+  Star(mood: "neutral"),
+  Star(mood: "worried"),
+  Star(mood: "chill"),
+  Star(mood: "disgusted"),
+  Star(mood: "calm"),
+  Star(mood: "delighted"),
+  Star(mood: "naughty"),
+  Star(mood: "annoyed"),
 ];
 
 class MoodPicker extends StatelessWidget {

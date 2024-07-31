@@ -4,7 +4,7 @@ import 'package:secondsight/src/ui/components/journal_card.dart';
 import 'package:secondsight/src/ui/components/new_journal_card.dart';
 import 'package:secondsight/src/ui/screens/mood_picker.dart';
 import '../themes/source_colors.dart';
-import '../components/mood_star.dart';
+import '../components/star.dart';
 import '../components/calendar_week.dart';
 
 // the list of journal cards
@@ -63,9 +63,9 @@ class Homepage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              MoodStar(mood: "sad"),
-              MoodStar(mood: "happy"),
-              MoodStar(mood: "angry"),
+              Star(mood: "sad"),
+              Star(mood: "happy"),
+              Star(mood: "angry"),
             ],
           ),
           // "view more" button to view all moods
