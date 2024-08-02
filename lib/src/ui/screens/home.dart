@@ -10,19 +10,19 @@ import '../components/calendar_week.dart';
 // the list of journal cards
 var journalCards = [
   // keep the first one, use to create new cards
-  JournalCard(
+  const JournalCard(
     title: 'view library',
     content: 'create new...',
   ),
-  JournalCard(
+  const JournalCard(
     title: 'Entry 1',
     content: 'excerpt...',
   ),
-  JournalCard(
+  const JournalCard(
     title: 'Entry 2',
     content: 'excerpt...',
   ),
-  JournalCard(
+  const JournalCard(
     title: 'Entry 3',
     content: 'excerpt...',
   ),
