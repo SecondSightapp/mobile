@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/components/journal_card.dart';
+import 'package:secondsight/src/ui/components/new_journal_card.dart';
 import 'package:secondsight/src/ui/screens/mood_picker.dart';
-import '../components/navbar.dart';
 import '../themes/source_colors.dart';
 import '../components/star.dart';
 import '../components/calendar_week.dart';
 
 // the list of journal cards
-var journalCards = [
+const journalCards = [
   // keep the first one, use to create new cards
-  JournalCard(
-    title: 'view library',
-    content: 'create new...',
-  ),
+  NewJournalCard(),
   JournalCard(
     title: 'Entry 1',
     content: 'excerpt...',
@@ -28,63 +25,10 @@ var journalCards = [
   ),
 ];
 
-Map<String, String> journalData = {};
-
 // home page layout
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // app bar with title and buttons for menu and settings
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            "second sight",
-            style: GoogleFonts.lexend(
-              textStyle: const TextStyle(
-                color: Color.fromRGBO(209, 196, 197, 1),
-                fontSize: 20,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ),
-        elevation: 0,
-        backgroundColor: themePurple,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            // open the menu
-          },
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // open settings
-            }
-          ),
-        ],
-      ),
-      body: const HomePageBody(),
-      // navbar
-      bottomNavigationBar: NavBar(
-        selectedIndex: 0,
-      ),
-    );
-  }
-}
-
-class HomePageBody extends StatelessWidget {
-  const HomePageBody({super.key});
+class Homepage extends StatelessWidget {
+  const Homepage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -119,9 +63,9 @@ class HomePageBody extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Star(color: Color.fromRGBO(181, 200, 229, 1)),
-              Star(color: Color.fromRGBO(245, 229, 198, 1)),
-              Star(color: Color.fromRGBO(216, 160, 156, 1)),
+              Star(mood: "sad"),
+              Star(mood: "happy"),
+              Star(mood: "angry"),
             ],
           ),
           // "view more" button to view all moods
@@ -162,7 +106,7 @@ class HomePageBody extends StatelessWidget {
                   ),
                 ],
               ),
-              child: const CalendarWeek(),
+              child: CalendarWeek(),
             ),
           ),
           // "start journaling" prompt
