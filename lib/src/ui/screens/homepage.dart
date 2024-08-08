@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/components/journal_card.dart';
@@ -6,29 +8,35 @@ import 'package:secondsight/src/ui/screens/mood_picker.dart';
 import '../themes/source_colors.dart';
 import '../components/star.dart';
 import '../components/calendar_week.dart';
+import '../../data/entries.dart';
+import '../../data/journal_entry.dart';
 
 // the list of journal cards
 const journalCards = [
   // keep the first one, use to create new cards
   NewJournalCard(),
-  JournalCard(
-    title: 'Entry 1',
-    content: 'excerpt...',
-  ),
-  JournalCard(
-    title: 'Entry 2',
-    content: 'excerpt...',
-  ),
-  JournalCard(
-    title: 'Entry 3',
-    content: 'excerpt...',
-  ),
 ];
 
 // home page layout
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
+
+  List<Widget> topThreeEntries() {
+    List<Widget> topThree = [];
+    Map<JournalEntry, DateTime> lastEdited = Map.fromEntries(
+      entries.map((entry) => MapEntry(entry, entry.createdAt))
+    );
+
+    lastEdited.entries.toList().sort((a, b) => a.value.compareTo(b.value));
+
+    for (int i = 0; i < 3; i++) {
+      if (i < lastEdited.length) {
+        topThree.add(JournalCard(entry: entries[i]));
+      }
+    }
+    return topThree;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,13 +67,13 @@ class Homepage extends StatelessWidget {
           ),
           // stars that the user can click on to choose a mood
           // display top 3 moods
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Star(mood: "sad"),
-              Star(mood: "happy"),
-              Star(mood: "angry"),
+              Star(mood: "sad", isPoppable: false),
+              Star(mood: "happy", isPoppable: false),
+              Star(mood: "angry", isPoppable: false),
             ],
           ),
           // "view more" button to view all moods
@@ -130,7 +138,10 @@ class Homepage extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(8.0),
               scrollDirection: Axis.horizontal,
-              children: journalCards,
+              children: [
+                const NewJournalCard(),
+                ... topThreeEntries(),
+              ],
             ),
           ),
         ],
