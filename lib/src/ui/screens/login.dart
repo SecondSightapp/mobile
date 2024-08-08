@@ -6,8 +6,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: const LoginBody(),
+    return const Scaffold(
+      body: LoginBody(),
     );
   }
 }
@@ -52,7 +52,7 @@ class LoginBody extends StatelessWidget {
                 const SizedBox(height: 48),
                 ElevatedButton.icon(
                   onPressed: _handleGoogleSignIn,
-                  icon: Icon(Icons.account_circle), // Add an icon to the button
+                  icon: const Icon(Icons.account_circle), // Add an icon to the button
                   label: const Text('Sign in with Google'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16),
@@ -65,7 +65,7 @@ class LoginBody extends StatelessWidget {
                   onPressed: () {
                     // Implement Facebook Sign In
                   },
-                  icon: Icon(Icons.facebook), // Add an icon to the button
+                  icon: const Icon(Icons.facebook), // Add an icon to the button
                   label: const Text('Sign in with Facebook'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16),
@@ -78,7 +78,7 @@ class LoginBody extends StatelessWidget {
                   onPressed: () {
                     // Implement Apple Sign In
                   },
-                  icon: Icon(Icons.apple), // Add an icon to the button
+                  icon: const Icon(Icons.apple), // Add an icon to the button
                   label: const Text('Sign in with Apple'),
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16),
