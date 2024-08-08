@@ -63,10 +63,6 @@ class MoodPicker extends StatelessWidget {
         ],
       ), 
       body: const MoodPickerBody(),
-      // navbar
-      bottomNavigationBar: NavBar(
-        selectedIndex: 0,
-      ),
     );
   }
 }

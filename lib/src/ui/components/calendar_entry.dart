@@ -1,21 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:secondsight/src/ui/components/journal_popup.dart';
+import '../components/journal_popup.dart';
 import '../themes/source_colors.dart';
+import '../../data/moods.dart';
+import '../../data/journal_entry.dart';
 
-class JournalCard extends StatefulWidget {
-  final String title;
-  final String content;
+class CalendarEntry extends StatelessWidget {
+  String title;
+  String content;
+  DateTime date;
+  JournalEntry entry;
 
-  const JournalCard({super.key, this.title = '', this.content = ''});
-
-  @override
-  State<JournalCard> createState() => _JournalCardState();
-}
-
-class _JournalCardState extends State<JournalCard> {
-  String _title = '';
-  String _content = '';
+  CalendarEntry({super.key, required this.entry}) : title = entry.title, content = entry.content, date = entry.createdAt;
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +29,9 @@ class _JournalCardState extends State<JournalCard> {
             final result = await showDialog<Map<String, String>>(
               context: context,
               builder: (BuildContext context) {
-                return JournalPopup(title: widget.title, content: widget.content);
+                return JournalPopup(title: title, content: content);
               }
             );
-
-            if (result != null) {
-              setState(() {
-                _title = result['title'] ?? '';
-                _content = result['content'] ?? '';
-              });
-            }
           },
           child: Column(
             children: [
@@ -51,10 +40,10 @@ class _JournalCardState extends State<JournalCard> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.title,
+                    title,
                     style: GoogleFonts.lexend(
                       color: themePurple,
-                      fontSize: 14,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -65,11 +54,11 @@ class _JournalCardState extends State<JournalCard> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.content.length > 20 ? '${widget.content.substring(0, 20)}...' : widget.content,
+                    content.length > 100 ? '${content.substring(0, 180)}...' : content,
                     style: GoogleFonts.lexend(
                       color: themePurple,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
