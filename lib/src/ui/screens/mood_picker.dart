@@ -5,36 +5,18 @@ import '../components/navbar.dart';
 import '../components/star.dart';
 
 const stars = [
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
-  Star(color: Color.fromRGBO(181, 200, 229, 1)),
-  Star(color: Color.fromRGBO(245, 229, 198, 1)),
-  Star(color: Color.fromRGBO(216, 160, 156, 1)),
+  Star(mood: "sad"),
+  Star(mood: "happy"),
+  Star(mood: "angry"),
+  Star(mood: "cool"),
+  Star(mood: "neutral"),
+  Star(mood: "worried"),
+  Star(mood: "chill"),
+  Star(mood: "disgusted"),
+  Star(mood: "calm"),
+  Star(mood: "delighted"),
+  Star(mood: "naughty"),
+  Star(mood: "annoyed"),
 ];
 
 class MoodPicker extends StatelessWidget {
@@ -81,10 +63,6 @@ class MoodPicker extends StatelessWidget {
         ],
       ), 
       body: const MoodPickerBody(),
-      // navbar
-      bottomNavigationBar: NavBar(
-        selectedIndex: 0,
-      ),
     );
   }
 }

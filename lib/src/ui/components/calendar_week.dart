@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../themes/source_colors.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
+import '../../data/mood_state.dart';
+import '../../data/moods.dart';
+import '../../constants.dart';
 
 final months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -11,128 +17,113 @@ final weekdays = [
   'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
 ];
 
-class DayBox extends StatelessWidget {
-  final String day;
-  final Color moodColor;
-  final bool isCurrent;
+class CalendarWeek extends StatefulWidget {
+  const CalendarWeek({super.key});
 
-  const DayBox({super.key, required this.day, required this.moodColor, this.isCurrent = false});
+  @override
+  State<CalendarWeek> createState() => _CalendarWeekState();
+}
 
-  Widget getBox() {
-    return Icon(
-      Icons.star_rounded,
-      color: isCurrent ? Colors.white : Colors.transparent,
-      size: 30.0,
+class _CalendarWeekState extends State<CalendarWeek> {
+  Widget customDayBuilder(
+    bool isSelectable,
+    int index,
+    bool isSelectedDay,
+    bool isToday,
+    bool isPrevMonthDay,
+    TextStyle textStyle,
+    bool isNextMonthDay,
+    bool isThisMonthDay,
+    DateTime day
+  ) {
+    DateTime date = DateTime.utc(day.year, day.month, day.day);
+
+    Text dayText = Text(
+      day.day.toString(),
+      style: GoogleFonts.lexend(
+        textStyle: const TextStyle(
+          color: themePurple,
+          fontSize: 13,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+
+    Widget display = isToday ? Stack(
+      children: [
+        const Center(
+          child: Icon(
+            Icons.star_rounded,
+            color: Colors.white,
+            size: 40,
+          ),
+        ),
+        Center(child: dayText),
+      ],
+    ) : dayText;
+
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: moods[moodState.moodLog[date]] ?? const Color.fromRGBO(233, 233, 233, 1),
+      ),
+      child: Center(
+        child: display
+      )
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          day,
-          style: GoogleFonts.lexend(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.14,
+        child: CalendarCarousel(
+          customDayBuilder: customDayBuilder,
+          weekFormat: true,
+          iconColor: themePurple,
+          headerMargin: EdgeInsets.zero,
+          headerTextStyle: GoogleFonts.lexend(
+            textStyle: const TextStyle(
+              color: themePurple,
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          weekDayFormat: WeekdayFormat.narrow,
+          weekDayMargin: EdgeInsets.zero,
+          weekdayTextStyle: GoogleFonts.lexend(
             textStyle: const TextStyle(
               color: themePurple,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
           ),
-        ),
-        Container(
-          width: 40,
-          height: 40,
-          decoration: BoxDecoration(
-            color: moodColor,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: getBox(),
-        ),
-      ],
-    );
-  }
-}
-
-class CalendarWeek extends StatelessWidget {
-  const CalendarWeek({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 2.0, right: 2.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              TextButton(
-                onPressed: () {
-
-                },
-                child: const Icon(
-                  Icons.keyboard_arrow_left,
+          todayButtonColor: Colors.transparent,
+          selectedDayButtonColor: Colors.transparent,
+          pageScrollPhysics: const ScrollPhysics(),
+          onCalendarChanged: (date) {
+            customDayBuilder(
+              true,
+              1,
+              true,
+              true,
+              false,
+              GoogleFonts.lexend(
+                textStyle: const TextStyle(
                   color: themePurple,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-              Text(
-                months[DateTime.now().month - 1],
-                style: GoogleFonts.lexend(
-                  textStyle: const TextStyle(
-                    color: themePurple,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              TextButton(
-                onPressed: () {
-                  
-                },
-                child: const Icon(
-                  Icons.keyboard_arrow_right,
-                  color: themePurple,
-                ),
-              ),
-            ],
-          ),
+              false,
+              true,
+              date
+            );
+          },
         ),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            DayBox(
-              day: 'S',
-              moodColor: Color.fromRGBO(216, 160, 156, 1),
-            ),
-            DayBox(
-              day: 'M',
-              moodColor: Color.fromRGBO(189, 172, 198, 1),
-            ),
-            DayBox(
-              day: 'T',
-              moodColor: Color.fromRGBO(204, 226, 200, 1),
-            ),
-            DayBox(
-              day: 'W',
-              moodColor: Color.fromRGBO(181, 200, 229, 1),
-              isCurrent: true,
-            ),
-            DayBox(
-              day: 'T',
-              moodColor: Color.fromRGBO(233, 233, 233, 1),
-            ),
-            DayBox(
-              day: 'F',
-              moodColor: Color.fromRGBO(233, 233, 233, 1),
-            ),
-            DayBox(
-              day: 'S',
-              moodColor: Color.fromRGBO(233, 233, 233, 1),
-            ),
-          ],
-        ),
-        const Padding(padding: EdgeInsets.only(bottom: 8.0)),
-      ],
+      ),
     );
   }
 }

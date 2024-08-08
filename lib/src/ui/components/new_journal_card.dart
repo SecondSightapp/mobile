@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../themes/source_colors.dart';
+import '../screens/journal.dart';
+
+class NewJournalCard extends StatelessWidget {
+  const NewJournalCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 224,
+      height: 182,
+      child: Card(
+        color: Colors.white,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Journal()),
+                    );
+                  },
+                  child: Text(
+                    "view library",
+                    style: GoogleFonts.lexend(
+                      color: themePurple,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Journal()),
+                    );
+                  },
+                  child: Text(
+                    "create new...",
+                    style: GoogleFonts.lexend(
+                      color: themePurple,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
