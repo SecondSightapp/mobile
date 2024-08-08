@@ -7,9 +7,24 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import '../../data/mood_state.dart';
 import '../../data/moods.dart';
 import '../../constants.dart';
+import '../../data/entries.dart';
+import '../../data/journal_entry.dart';
+import '../components/calendar_entry.dart';
 
-class Calendar extends StatelessWidget {
+class Calendar extends StatefulWidget {
   const Calendar({super.key});
+
+  @override
+  State<Calendar> createState() => _CalendarState();
+}
+
+class _CalendarState extends State<Calendar> {
+  List<JournalEntry> _selectedDayEntries = entries.where((entry) {
+    DateTime entryDate = DateTime.utc(entry.createdAt.year, entry.createdAt.month, entry.createdAt.day);
+    DateTime now = DateTime.now();
+    DateTime today = DateTime.utc(now.year, now.month, now.day);
+    return entryDate == today;
+  }).toList();
 
   Widget customDayBuilder(
     bool isSelectable,
@@ -62,12 +77,13 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: const Color.fromRGBO(247, 247, 247, 1),
       child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5,
+              height: MediaQuery.of(context).size.height * 0.4,
               child: CalendarCarousel(
                 customDayBuilder: customDayBuilder,
                 iconColor: themePurple,
@@ -111,10 +127,38 @@ class Calendar extends StatelessWidget {
                     date
                   );
                 },
+                onDayPressed: (p0, p1) {
+                  setState(() {
+                    _selectedDayEntries = entries.where((entry) {
+                      DateTime entryDate = DateTime.utc(entry.createdAt.year, entry.createdAt.month, entry.createdAt.day);
+                      DateTime p0Date = DateTime.utc(p0.year, p0.month, p0.day);
+                      return entryDate == p0Date;
+                    }).toList();
+                  });
+                },
               ),
             ),
-          )
-        ]
+          ),
+          Expanded(
+            child: _selectedDayEntries.isEmpty
+            ? Center(
+              child: Text(
+                'no entries for this day',
+                style: GoogleFonts.lexend(
+                  textStyle: const TextStyle(
+                    color: themePurple,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ) : ListView(
+              padding: const EdgeInsets.all(8.0),
+              scrollDirection: Axis.vertical,
+              children: _selectedDayEntries.map((e) => CalendarEntry(entry: e)).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }
