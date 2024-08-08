@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -69,12 +70,14 @@ class HeaderSection extends StatelessWidget {
             height: 57,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'time to reflect',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF383073),
+            style: GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF383073),
+              ),
             ),
           ),
         ],

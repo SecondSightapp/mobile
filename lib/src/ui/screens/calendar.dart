@@ -44,7 +44,7 @@ class _CalendarState extends State<Calendar> {
       style: GoogleFonts.lexend(
         textStyle: const TextStyle(
           color: themePurple,
-          fontSize: 13,
+          fontSize: 15,
           fontWeight: FontWeight.w400,
         ),
       ),
