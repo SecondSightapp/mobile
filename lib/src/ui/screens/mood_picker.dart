@@ -4,19 +4,19 @@ import '../themes/source_colors.dart';
 import '../components/navbar.dart';
 import '../components/star.dart';
 
-const stars = [
-  Star(mood: "sad"),
-  Star(mood: "happy"),
-  Star(mood: "angry"),
-  Star(mood: "cool"),
-  Star(mood: "neutral"),
-  Star(mood: "worried"),
-  Star(mood: "chill"),
-  Star(mood: "disgusted"),
-  Star(mood: "calm"),
-  Star(mood: "delighted"),
-  Star(mood: "naughty"),
-  Star(mood: "annoyed"),
+final stars = [
+  Star(mood: "sad", isPoppable: true),
+  Star(mood: "happy", isPoppable: true),
+  Star(mood: "angry", isPoppable: true),
+  Star(mood: "cool", isPoppable: true),
+  Star(mood: "neutral", isPoppable: true),
+  Star(mood: "worried", isPoppable: true),
+  Star(mood: "chill", isPoppable: true),
+  Star(mood: "disgusted", isPoppable: true),
+  Star(mood: "calm", isPoppable: true),
+  Star(mood: "delighted", isPoppable: true),
+  Star(mood: "naughty", isPoppable: true),
+  Star(mood: "annoyed", isPoppable: true),
 ];
 
 class MoodPicker extends StatelessWidget {
@@ -88,25 +88,27 @@ class _MoodPickerBodyState extends State<MoodPickerBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const MoodCounter(),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 12.0, bottom: 12.0),
-              controller: _scrollController,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 25.0,
-                mainAxisSpacing: 25.0,
+      body: Container(
+        color: const Color.fromRGBO(247, 247, 247, 1),
+        child: Column(
+          children: [
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.only(left: 25.0, right: 25.0, top: 25.0, bottom: 25.0),
+                controller: _scrollController,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 25.0,
+                  mainAxisSpacing: 25.0,
+                ),
+                itemCount: stars.length,
+                itemBuilder: (context, index) {
+                  return stars[index];
+                },
               ),
-              itemCount: stars.length,
-              itemBuilder: (context, index) {
-                return stars[index];
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _scrollToTop,
