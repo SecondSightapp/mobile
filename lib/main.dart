@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
-import 'package:secondsight/src/ui/screens/journal.dart';
+import 'package:secondsight/src/ui/screens/journal_screen.dart';
 import 'package:secondsight/src/ui/screens/starboard.dart';
 import 'package:secondsight/src/ui/screens/calendar.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
@@ -53,7 +53,7 @@ class _MainPageState extends State<MainPage> {
 
   final List _pages = <Widget>[
     const Homepage(),
-    const Journal(),
+    const JournalScreen(),
     const Starboard(),
     const Calendar(),
   ];

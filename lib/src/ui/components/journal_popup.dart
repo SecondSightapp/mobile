@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import "package:secondsight/src/ui/screens/journal_screen.dart";
 import "../themes/source_colors.dart";
-import "../screens/journal.dart";
 
 class JournalPopup extends StatelessWidget {
   final String title, content;
@@ -43,7 +43,7 @@ class JournalPopup extends StatelessWidget {
               Navigator.of(context).pop();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Journal()),
+                MaterialPageRoute(builder: (context) => const JournalScreen()),
               );
             },
             icon: const Icon(Icons.edit),

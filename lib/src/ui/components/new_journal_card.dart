@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:secondsight/src/ui/screens/journal_screen.dart';
 import '../themes/source_colors.dart';
-import '../screens/journal.dart';
 
 class NewJournalCard extends StatelessWidget {
   const NewJournalCard({super.key});
@@ -27,7 +27,7 @@ class NewJournalCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Journal()),
+                      MaterialPageRoute(builder: (context) => const JournalScreen()),
                     );
                   },
                   child: Text(
@@ -49,7 +49,7 @@ class NewJournalCard extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Journal()),
+                      MaterialPageRoute(builder: (context) => const JournalScreen()),
                     );
                   },
                   child: Text(
