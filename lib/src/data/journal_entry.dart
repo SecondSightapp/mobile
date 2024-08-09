@@ -3,6 +3,6 @@ class JournalEntry {
   String content;
   DateTime createdAt;
   DateTime updatedAt;
-  bool bookmarked;
+  bool bookmarked = false;
   JournalEntry(this.title, this.content) : createdAt = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day), updatedAt = DateTime.now();
 }

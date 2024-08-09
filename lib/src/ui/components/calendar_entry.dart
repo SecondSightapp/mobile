@@ -5,11 +5,15 @@ import '../themes/source_colors.dart';
 import '../../data/journal_entry.dart';
 import '../../data/entries.dart';
 import '../../constants.dart';
+import '../../data/moods.dart';
 
 class CalendarEntry extends StatefulWidget {
+  final String title;
+  final String content;
+  final DateTime date;
   final JournalEntry entry;
 
-  const CalendarEntry({super.key, required this.entry});
+  CalendarEntry({super.key, required this.entry}) : title = entry.title, content = entry.content, date = entry.createdAt;
 
   @override
   _CalendarEntryState createState() => _CalendarEntryState();
@@ -75,7 +79,7 @@ class _CalendarEntryState extends State<CalendarEntry> {
                       width: 20,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: moods[moodState.moodLog[DateTime.utc(date.year, date.month, date.day)]] ?? const Color.fromRGBO(233, 233, 233, 1),
+                        color: moods[moodState.moodLog[DateTime.utc(widget.date.year, widget.date.month, widget.date.day)]] ?? const Color.fromRGBO(233, 233, 233, 1),
                         shape: BoxShape.circle,
                       ),
                     ),
