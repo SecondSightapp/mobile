@@ -1,9 +1,9 @@
 import "package:flutter/material.dart";
 
 final moods = {
-  "sad": const Color.fromRGBO(181, 200, 229, 1),
+  "sad": const Color.fromRGBO(166, 192, 233, 1),
   "happy": const Color.fromRGBO(245, 229, 198, 1),
-  "angry": const Color.fromRGBO(216, 160, 156, 1),
+  "angry": const Color.fromRGBO(237, 147, 141, 1),
   "cool": const Color.fromRGBO(155, 167, 235, 1),
   "neutral": const Color.fromRGBO(204, 204, 204, 1),
   "worried": const Color.fromRGBO(205, 156, 216, 1),

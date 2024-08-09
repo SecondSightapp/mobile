@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/main.dart';
+import 'package:secondsight/src/ui/screens/homepage.dart';
 import 'dart:async';
 
 class LoadingScreen extends StatefulWidget {

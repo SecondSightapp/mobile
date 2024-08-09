@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'entry_screen.dart'; 
 import '../components/journal_popup.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
 
@@ -56,12 +58,14 @@ class HeaderSection extends StatelessWidget {
             height: 57,
           ),
           const SizedBox(height: 10),
-          const Text(
+          Text(
             'time to reflect',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-              color: themePurple,
+            style: GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+                color: themePurple,
+              ),
             ),
           ),
         ],

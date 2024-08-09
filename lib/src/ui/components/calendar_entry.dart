@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../components/journal_popup.dart';
 import '../themes/source_colors.dart';
 import '../../data/journal_entry.dart';
+import '../../data/entries.dart';
+import '../../constants.dart';
 
 class CalendarEntry extends StatefulWidget {
   final JournalEntry entry;
@@ -58,16 +60,26 @@ class _CalendarEntryState extends State<CalendarEntry> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    title,
-                    style: GoogleFonts.lexend(
-                      color: themePurple,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      title,
+                      style: GoogleFonts.lexend(
+                        color: themePurple,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
-                  ),
+                    Container(
+                      width: 20,
+                      height: 20,
+                      decoration: BoxDecoration(
+                        color: moods[moodState.moodLog[DateTime.utc(date.year, date.month, date.day)]] ?? const Color.fromRGBO(233, 233, 233, 1),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ]
                 ),
               ),
               Padding(
