@@ -1,12 +1,34 @@
-import "package:flutter/material.dart";
-import "package:google_fonts/google_fonts.dart";
-import "package:secondsight/src/ui/screens/journal_screen.dart";
-import "../themes/source_colors.dart";
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../themes/source_colors.dart';
 
-class JournalPopup extends StatelessWidget {
-  final String title, content;
+class JournalPopup extends StatefulWidget {
+  final String initialTitle;
+  final String initialContent;
 
-  const JournalPopup({super.key, required this.title, required this.content});
+  const JournalPopup({super.key, required this.initialTitle, required this.initialContent});
+
+  @override
+  _JournalPopupState createState() => _JournalPopupState();
+}
+
+class _JournalPopupState extends State<JournalPopup> {
+  late TextEditingController _titleController;
+  late TextEditingController _contentController;
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController = TextEditingController(text: widget.initialTitle);
+    _contentController = TextEditingController(text: widget.initialContent);
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,47 +39,45 @@ class JournalPopup extends StatelessWidget {
         backgroundColor: Colors.white,
         icon: const Icon(Icons.book, color: themePurple),
         scrollable: true,
-        title: Text(
-          title,
-          style: GoogleFonts.lexend(
-            textStyle: const TextStyle(
-              color: themePurple,
-              fontSize: 28,
-              fontWeight: FontWeight.w600,
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextField(
+              controller: _titleController,
+              decoration: const InputDecoration(
+                labelText: 'Title',
+              ),
             ),
-          ),
-        ),
-        content: Text(
-          content,
-          style: GoogleFonts.lexend(
-            textStyle: const TextStyle(
-              color: themePurple,
-              fontSize: 16,
-              fontWeight: FontWeight.w400,
+            TextField(
+              controller: _contentController,
+              decoration: const InputDecoration(
+                labelText: 'Content',
+              ),
+              maxLines: null,
             ),
-          ),
+          ],
         ),
         actions: [
           ElevatedButton.icon(
             onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const JournalScreen()),
-              );
+              Navigator.of(context).pop({
+                'title': _titleController.text,
+                'content': _contentController.text,
+              });
             },
-            icon: const Icon(Icons.edit),
-            label: const Text('edit'),
+            icon: const Icon(Icons.save),
+            label: const Text('Save'),
           ),
           ElevatedButton.icon(
             onPressed: () {
               Navigator.of(context).pop();
             },
             icon: const Icon(Icons.close),
-            label: const Text('close'),
+            label: const Text('Close'),
           ),
-        ]
+        ],
       ),
     );
   }
 }
+

@@ -20,6 +20,13 @@ class _JournalCardState extends State<JournalCard> {
   String _content = '';
 
   @override
+  void initState() {
+    super.initState();
+    _title = widget.title;
+    _content = widget.content;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 224,
@@ -35,8 +42,11 @@ class _JournalCardState extends State<JournalCard> {
             final result = await showDialog<Map<String, String>>(
               context: context,
               builder: (BuildContext context) {
-                return JournalPopup(title: widget.title, content: widget.content);
-              }
+                return JournalPopup(
+                  initialTitle: _title,
+                  initialContent: _content,
+                );
+              },
             );
 
             if (result != null) {
@@ -53,7 +63,7 @@ class _JournalCardState extends State<JournalCard> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.title.length > 40 ? '${widget.title.substring(0, 40)}...' : widget.title,
+                    _title.length > 40 ? '${_title.substring(0, 40)}...' : _title,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 14,
@@ -67,7 +77,7 @@ class _JournalCardState extends State<JournalCard> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.content.length > 40 ? '${widget.content.substring(0, 40)}...' : widget.content,
+                    _content.length > 40 ? '${_content.substring(0, 40)}...' : _content,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 20,

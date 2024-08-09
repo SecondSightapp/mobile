@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:secondsight/src/ui/themes/source_colors.dart';
+import 'entry_screen.dart'; 
+import '../components/journal_popup.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class JournalScreen extends StatefulWidget {
@@ -21,25 +24,10 @@ class _JournalScreenState extends State<JournalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF7F7F7),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-            ),
-            builder: (context) {
-              return CreateEntryModal(onCreate: _addEntry);
-            },
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
       body: Column(
         children: [
           const HeaderSection(),
-          const SortButton(),
+          SortButton(onCreateEntry: _addEntry),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16.0),
@@ -76,7 +64,7 @@ class HeaderSection extends StatelessWidget {
                 textStyle: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF383073),
+                color: themePurple,
               ),
             ),
           ),
@@ -87,7 +75,9 @@ class HeaderSection extends StatelessWidget {
 }
 
 class SortButton extends StatelessWidget {
-  const SortButton({super.key});
+  final void Function(Map<String, dynamic>) onCreateEntry;
+
+  const SortButton({super.key, required this.onCreateEntry});
 
   @override
   Widget build(BuildContext context) {
@@ -121,13 +111,51 @@ class SortButton extends StatelessWidget {
                 Text(
                   'Sort by',
                   style: TextStyle(
-                    color: Color(0xFF383073),
+                    color: themePurple,
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 SizedBox(width: 5.0),
                 Icon(Icons.keyboard_arrow_down_rounded),
+              ],
+            ),
+          ),
+          const Spacer(),
+          ElevatedButton(
+            onPressed: () async {
+              final newEntry = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CreateEntryScreen(),
+                ),
+              );
+
+              if (newEntry != null) {
+                onCreateEntry(newEntry);
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              backgroundColor: Colors.white,
+              shadowColor: Colors.transparent,
+              side: const BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
+            ),
+            child: const Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Create',
+                  style: TextStyle(
+                    color: themePurple,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(width: 5.0),
+                Icon(Icons.add),
               ],
             ),
           ),
@@ -165,7 +193,6 @@ class SortOptions extends StatelessWidget {
     );
   }
 }
-
 class EntryCard extends StatefulWidget {
   final Map<String, dynamic> entry;
 
@@ -176,8 +203,6 @@ class EntryCard extends StatefulWidget {
 }
 
 class _EntryCardState extends State<EntryCard> {
-  bool _isExpanded = false;
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -189,10 +214,23 @@ class _EntryCardState extends State<EntryCard> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: InkWell(
-        onTap: () {
-          setState(() {
-            _isExpanded = !_isExpanded;
-          });
+        onTap: () async {
+          final updatedEntry = await showDialog<Map<String, String>>(
+            context: context,
+            builder: (BuildContext context) {
+              return JournalPopup(
+                initialTitle: widget.entry['title'],
+                initialContent: widget.entry['description'] ?? 'No description',
+              );
+            }
+          );
+
+          if (updatedEntry != null) {
+            setState(() {
+              widget.entry['title'] = updatedEntry['title'] ?? widget.entry['title'];
+              widget.entry['description'] = updatedEntry['content'] ?? widget.entry['description'];
+            });
+          }
         },
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -201,7 +239,6 @@ class _EntryCardState extends State<EntryCard> {
             children: [
               Row(
                 children: [
-                  // Circle and title
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -225,7 +262,6 @@ class _EntryCardState extends State<EntryCard> {
                     ],
                   ),
                   const Spacer(),
-                  // Date and save button
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
@@ -247,18 +283,6 @@ class _EntryCardState extends State<EntryCard> {
                   ),
                 ],
               ),
-              // Show or hide description based on _isExpanded
-              if (_isExpanded) 
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Text(
-                    widget.entry['description'],
-                    style: const TextStyle(
-                      fontSize: 14,
-                      color: Color(0xFF4C4C4C),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
@@ -266,58 +290,3 @@ class _EntryCardState extends State<EntryCard> {
     );
   }
 }
-
-class CreateEntryModal extends StatefulWidget {
-  final void Function(Map<String, dynamic>) onCreate;
-
-  const CreateEntryModal({super.key, required this.onCreate});
-
-  @override
-  State<CreateEntryModal> createState() => _CreateEntryModalState();
-}
-
-class _CreateEntryModalState extends State<CreateEntryModal> {
-  final TextEditingController _titleController = TextEditingController();
-  final TextEditingController _descriptionController = TextEditingController();
-  final Color _fixedColor = Colors.blue; // Single fixed color
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _titleController,
-              decoration: const InputDecoration(labelText: 'Title'),
-            ),
-            const SizedBox(height: 8.0),
-            TextField(
-              controller: _descriptionController,
-              decoration: const InputDecoration(labelText: 'Description'),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () {
-                if (_titleController.text.isNotEmpty) {
-                  widget.onCreate({
-                    'title': _titleController.text,
-                    'description': _descriptionController.text,
-                    'color': _fixedColor,
-                    'date': DateTime.now().toIso8601String().split('T').first,
-                  });
-                  Navigator.pop(context);
-                }
-              },
-              child: const Text('Create'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
