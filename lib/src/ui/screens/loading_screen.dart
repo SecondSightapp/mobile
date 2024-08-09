@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:secondsight/main.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
 import 'dart:async';
 
@@ -34,7 +35,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         debugPrint("navigating to HomePage");
         // it cant go back since itss a loading screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (_) => const Homepage(),
+          builder: (_) => const MainPage(),
         ));
       }
     });
