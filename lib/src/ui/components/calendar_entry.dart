@@ -18,8 +18,8 @@ class CalendarEntry extends StatefulWidget {
   @override
   _CalendarEntryState createState() => _CalendarEntryState();
 }
-
 class _CalendarEntryState extends State<CalendarEntry> {
+
   late String title;
   late String content;
 
