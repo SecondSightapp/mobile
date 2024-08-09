@@ -7,7 +7,7 @@ class JournalCard extends StatefulWidget {
   final String title;
   final String content;
 
-  const JournalCard({super.key, this.title = '', this.content = ''});
+  const JournalCard({super.key, required this.title, required this.content});
 
   @override
   State<JournalCard> createState() => _JournalCardState();
@@ -16,6 +16,13 @@ class JournalCard extends StatefulWidget {
 class _JournalCardState extends State<JournalCard> {
   String _title = '';
   String _content = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _title = widget.title;
+    _content = widget.content;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +40,11 @@ class _JournalCardState extends State<JournalCard> {
             final result = await showDialog<Map<String, String>>(
               context: context,
               builder: (BuildContext context) {
-                return JournalPopup(title: widget.title, content: widget.content);
-              }
+                return JournalPopup(
+                  initialTitle: _title,
+                  initialContent: _content,
+                );
+              },
             );
 
             if (result != null) {
@@ -51,7 +61,7 @@ class _JournalCardState extends State<JournalCard> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.title,
+                    _title,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 14,
@@ -65,7 +75,7 @@ class _JournalCardState extends State<JournalCard> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    widget.content.length > 20 ? '${widget.content.substring(0, 20)}...' : widget.content,
+                    _content.length > 20 ? '${_content.substring(0, 20)}...' : _content,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 28,
