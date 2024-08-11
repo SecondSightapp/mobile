@@ -42,6 +42,7 @@ dependencies:
   google_sign_in: ^6.2.1
   google_sign_in_ios: ^5.7.6
   path_provider_foundation: ^2.4.0
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
