@@ -5,6 +5,8 @@ import 'package:secondsight/main.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
 import 'dart:async';
 
+import 'package:secondsight/src/ui/screens/login.dart';
+
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
 

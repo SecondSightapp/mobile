@@ -33,13 +33,13 @@ class _CalendarEntryState extends State<CalendarEntry> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 224,
-      height: 182,
+      height: 150,
       child: Card(
         color: Colors.white,
-        elevation: 4,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: Color(0xFFE0E0E0)),
         ),
         child: InkWell(
           onTap: () async {
@@ -91,7 +91,7 @@ class _CalendarEntryState extends State<CalendarEntry> {
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    content.length > 100 ? '${content.substring(0, 100)}...' : content,
+                    content.length > 125 ? '${content.substring(0, 125)}...' : content,
                     style: GoogleFonts.lexend(
                       color: themePurple,
                       fontSize: 14,
