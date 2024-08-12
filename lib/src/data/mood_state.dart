@@ -18,7 +18,7 @@ class MoodService {
         },
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> responseData = json.decode(response.body);
         return responseData.map((json) => MoodStar.fromJson(json)).toList();
       } else {
@@ -35,7 +35,6 @@ class MoodService {
 
     final starData = {
       'mood': mood,
-      'date': DateTime.now().toUtc().toIso8601String().substring(0, 10),
     };
 
     try {
@@ -49,6 +48,8 @@ class MoodService {
         },
         body: json.encode(starData), 
       );
+
+      print(response.statusCode);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Star created successfully');
