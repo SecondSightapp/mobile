@@ -12,9 +12,14 @@ import '../../data/entries.dart';
 import '../../data/journal_entry.dart';
 
 // home page layout
-class Homepage extends StatelessWidget {
+class Homepage extends StatefulWidget {
   const Homepage({super.key});
 
+  @override
+  State<Homepage> createState() => _HomepageState();
+}
+
+class _HomepageState extends State<Homepage> {
   List<Widget> topThreeEntries() {
     List<Widget> topThree = [];
     
@@ -56,9 +61,9 @@ class Homepage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Star(mood: "sad", isPoppable: false),
-              Star(mood: "happy", isPoppable: false),
-              Star(mood: "angry", isPoppable: false),
+              Star(mood: "SAD", isPoppable: false),
+              Star(mood: "HAPPY", isPoppable: false),
+              Star(mood: "ANGRY", isPoppable: false),
             ],
           ),
           // "view more" button to view all moods

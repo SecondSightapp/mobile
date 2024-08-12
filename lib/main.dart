@@ -20,20 +20,17 @@ class SecondSightApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MoodState(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Login Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(56, 48, 115, 1)),
-        ),
-        // making this home for now for testing purposes, will be login page otherwise and should only go to homepage if logged in
-        home: const LoginPage(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Login Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(56, 48, 115, 1)),
       ),
+      // making this home for now for testing purposes, will be login page otherwise and should only go to homepage if logged in
+      home: const LoginPage(),
     );
   }
 }

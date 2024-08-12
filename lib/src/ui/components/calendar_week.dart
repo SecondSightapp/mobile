@@ -7,6 +7,7 @@ import 'package:flutter_calendar_carousel/flutter_calendar_carousel.dart';
 import '../../data/mood_state.dart';
 import '../../data/moods.dart';
 import '../../constants.dart';
+import '../../data/mood_star.dart';
 
 final months = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -25,6 +26,34 @@ class CalendarWeek extends StatefulWidget {
 }
 
 class _CalendarWeekState extends State<CalendarWeek> {
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.clear();
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMoods();
+  }
+
   Widget customDayBuilder(
     bool isSelectable,
     int index,
@@ -65,7 +94,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: moods[moodState.moodLog[date]] ?? const Color.fromRGBO(233, 233, 233, 1),
+        color: moods[getMoodForDate(date)] ?? const Color.fromRGBO(233, 233, 233, 1),
       ),
       child: Center(
         child: display
