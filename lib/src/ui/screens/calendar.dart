@@ -178,7 +178,25 @@ class _CalendarState extends State<Calendar> {
               ),
             ),
           ),
-          
+          Expanded(
+            child: _selectedDayEntries.isEmpty
+            ? Center(
+              child: Text(
+                'no entries for this day',
+                style: GoogleFonts.lexend(
+                  textStyle: const TextStyle(
+                    color: themePurple,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ) : ListView(
+              padding: const EdgeInsets.all(8.0),
+              scrollDirection: Axis.vertical,
+              children: _selectedDayEntries.map((e) => CalendarEntry(entry: e)).toList(),
+            ),
+          ),
         ],
       ),
     );
