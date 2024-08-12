@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:secondsight/src/data/token.dart';
+import 'package:secondsight/src/ui/screens/loading_screen.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
 import 'dart:async';
@@ -63,6 +64,9 @@ class _LoginPageState extends State<LoginPage> {
       if (authCode != null) {
         print("Authorization code: $authCode");
         TokenService.setToken(authCode);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => const LoadingScreen(),
+        ));
         // Continue with your OAuth flow, such as exchanging the code for an access token
       } else {
         print("Authorization code not found in the URL");
