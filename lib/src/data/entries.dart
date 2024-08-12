@@ -1,10 +1,60 @@
 import '../data/journal_entry.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'token.dart';
+class NoteService {
+  static Future<List<JournalEntry>> getEntries() async {
+    final url = 'https://secondsight-backend.onrender.com/notes'; 
 
-List<JournalEntry> entries = [
-  JournalEntry("Twilight's Embrace", "The sun dipped below the horizon, painting the sky in vibrant hues of orange and pink. A gentle breeze rustled through the trees, carrying the sweet scent of blooming flowers. In the distance, crickets began their nightly chorus, their rhythmic chirping a soothing melody. As darkness fell, stars twinkled to life, dotting the velvet sky."),
-  JournalEntry("Seaside Solitude", "Waves crashed against the rocky shore, sending sprays of salty mist into the air. Seagulls circled overhead, their cries echoing across the vast expanse of the ocean. A lone fisherman cast his line into the churning waters, patiently waiting for a bite. The salty breeze tousled his hair as he gazed out at the endless blue horizon."),
-  JournalEntry("Whispers of Antiquity", "The old bookstore creaked with history, its shelves lined with dusty tomes and forgotten tales. Sunlight filtered through stained-glass windows, casting colorful patterns on worn wooden floors. The scent of aged paper and leather bindings filled the air, inviting visitors to lose themselves in the worlds hidden within each carefully preserved volume."),
-  JournalEntry("Misty Mountains", "Clouds clung to the rugged peaks, shrouding the mountain in a veil of mystery. Pine trees swayed in the cool mountain breeze, their needles whispering secrets to the wind. A lone eagle soared overhead, its piercing cry echoing through the mist. As the sun dipped below the horizon, the mountains were bathed in a soft golden light, casting long shadows across the valley below."),
-  JournalEntry("City of Lights", "Neon signs flickered to life, casting a kaleidoscope of colors onto rain-slicked streets. The city buzzed with energy, its denizens moving in a synchronized dance of light and shadow. Music spilled from open windows, mingling with the scent of sizzling street food and car exhaust. As night fell, the city transformed into a glittering wonderland, its skyscrapers reaching for the stars."),
-  JournalEntry("Eternal Forest", "Ancient trees loomed overhead, their gnarled branches reaching towards the sky. Shafts of golden sunlight filtered through the dense canopy, illuminating the forest floor in a dappled pattern. Birds flitted from branch to branch, their songs blending with the rustle of leaves and the gentle murmur of a nearby stream. Time seemed to stand still in this enchanted place, where nature reigned supreme."),
-];
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer ${TokenService.token}', 
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> responseData = json.decode(response.body);
+        return responseData.map((json) => JournalEntry.fromJson(json)).toList();
+      } else {
+        throw Exception('Failed to fetch notes. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error occurred while fetching notes: $error');
+      throw Exception('Error occurred while fetching notes: $error');
+    }
+  }
+
+  static Future<void> createEntry(String title, String content) async {
+    final url = 'https://secondsight-backend.onrender.com/notes'; 
+
+    final noteData = {
+      'title': title,
+      'content': content,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer ${TokenService.token}', 
+          'Content-Type': 'application/json', 
+        },
+        body: json.encode(noteData), 
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Note created successfully');
+        print('Response body: ${response.body}');
+      } else {
+        print('Failed to create note. Status code: ${response.statusCode}');
+        print('Response body: ${response.body}');
+      }
+
+    } catch (error) {
+      print('Error occurred while creating note: $error');
+      throw Exception('Error occurred while creating note: $error');
+    }
+  }
+}

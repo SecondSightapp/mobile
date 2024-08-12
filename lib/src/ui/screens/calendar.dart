@@ -20,12 +20,7 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  List<JournalEntry> _selectedDayEntries = entries.where((entry) {
-    DateTime entryDate = DateTime.utc(entry.createdAt.year, entry.createdAt.month, entry.createdAt.day);
-    DateTime now = DateTime.now();
-    DateTime today = DateTime.utc(now.year, now.month, now.day);
-    return entryDate == today;
-  }).toList();
+  
 
   final List<MoodStar> _moodLog = [];
 
@@ -151,35 +146,13 @@ class _CalendarState extends State<Calendar> {
                 },
                 onDayPressed: (p0, p1) {
                   setState(() {
-                    _selectedDayEntries = entries.where((entry) {
-                      DateTime entryDate = DateTime.utc(entry.createdAt.year, entry.createdAt.month, entry.createdAt.day);
-                      DateTime p0Date = DateTime.utc(p0.year, p0.month, p0.day);
-                      return entryDate == p0Date;
-                    }).toList();
+                    
                   });
                 },
               ),
             ),
           ),
-          Expanded(
-            child: _selectedDayEntries.isEmpty
-            ? Center(
-              child: Text(
-                'no entries for this day',
-                style: GoogleFonts.lexend(
-                  textStyle: const TextStyle(
-                    color: themePurple,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-            ) : ListView(
-              padding: const EdgeInsets.all(8.0),
-              scrollDirection: Axis.vertical,
-              children: _selectedDayEntries.map((e) => CalendarEntry(entry: e)).toList(),
-            ),
-          ),
+          
         ],
       ),
     );

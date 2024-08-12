@@ -1,8 +1,25 @@
 class JournalEntry {
+  String id;
   String title;
   String content;
   DateTime createdAt;
   DateTime updatedAt;
-  bool bookmarked;
-  JournalEntry(this.title, this.content) : createdAt = DateTime.utc(DateTime.now().year, DateTime.now().month, DateTime.now().day), updatedAt = DateTime.now(), bookmarked = false;
+
+  JournalEntry({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.createdAt,
+    required this.updatedAt,
+  });
+
+  factory JournalEntry.fromJson(Map<String, dynamic> json) {
+    return JournalEntry(
+      id: json['id'],
+      title: json['title'],
+      content: json['content'],
+      createdAt: DateTime.parse(json['createdAt']),
+      updatedAt: DateTime.parse(json['updatedAt']),
+    );
+  }
 }
