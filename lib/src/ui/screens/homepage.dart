@@ -10,6 +10,8 @@ import '../components/star.dart';
 import '../components/calendar_week.dart';
 import '../../data/entries.dart';
 import '../../data/journal_entry.dart';
+import '../../data/mood_star.dart';
+import '../../data/mood_state.dart';
 
 // home page layout
 class Homepage extends StatefulWidget {
@@ -20,12 +22,71 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  List<Widget> topThreeEntries() {
-    List<Widget> topThree = [];
-    
+  final List<JournalEntry> _entries = [];
+  final List<MoodStar> _moodLog = [];
 
-    
-    return topThree;
+  @override
+  void initState() {
+    super.initState();
+    _fetchNotes();
+    getMoods();
+  }
+  
+  Future<void> _fetchNotes() async {
+  try {
+    final notes = await NoteService.getEntries(); 
+    setState(() {
+      _entries.addAll(notes); 
+    });
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to load notes: $e')),
+    );
+  }
+  }
+
+  void _addEntry(Map<String, dynamic> entry) {
+    setState(() {
+      _entries.add(JournalEntry(
+        id: entry['id'], 
+        title: entry['title'], 
+        content: entry['description'], 
+        createdAt: entry['createdAt'], 
+        updatedAt: entry['updatedAt']
+      ));
+    });
+  }
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
+  }
+
+
+  List<Widget> topThreeEntries() {
+    List<Widget> topThree = _entries.map((e) => JournalCard(entry: e)).toList();
+
+    // finds the three most recently updated entries and displays them the order of most recently updated
+    topThree.sort((a, b) {
+      return (b as JournalCard).entry.updatedAt.compareTo((a as JournalCard).entry.updatedAt);
+    });
+
+    // return the first three entries, and if there are less than three entries, return the whole list
+    return topThree.length > 3 ? topThree.sublist(0, 3) : topThree;
   }
 
   @override

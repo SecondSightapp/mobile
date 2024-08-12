@@ -78,6 +78,7 @@ flutter:
     - assets/images/stars/
     - assets/images/constellation.png
     - assets/images/logos/
+    - assets/images/ai_stars.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

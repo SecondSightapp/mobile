@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:secondsight/src/ui/screens/entry_display.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'entry_screen.dart'; 
 import '../components/journal_popup.dart';
@@ -296,9 +297,9 @@ class _EntryCardState extends State<EntryCard> {
           final updatedEntry = await showDialog<Map<String, String>>(
             context: context,
             builder: (BuildContext context) {
-              return JournalPopup(
-                initialTitle: widget.entry.title,
-                initialContent: widget.entry.content,
+              return EntryDisplay(
+                title: widget.entry.title,
+                content: widget.entry.content,
               );
             }
           );

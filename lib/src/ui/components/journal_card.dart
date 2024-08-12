@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/components/journal_popup.dart';
 import '../themes/source_colors.dart';
 import '../../data/journal_entry.dart';
+import '../screens/entry_display.dart';
 
 class JournalCard extends StatefulWidget {
   final String title;
@@ -39,7 +40,9 @@ class _JournalCardState extends State<JournalCard> {
           side: const BorderSide(color: Color(0xFFE0E0E0)),
         ),
         child: InkWell(
-          
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => EntryDisplay(title: _title, content: _content)));
+          },
           child: Column(
             children: [
               Padding(

@@ -66,6 +66,8 @@ class _CalendarState extends State<Calendar> {
     super.initState();
     getMoods();
     getEntries();
+    _selectedDayEntries = getEntriesForDate(DateTime.now());
+    print(_selectedDayEntries);
   }
 
 

@@ -32,7 +32,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     });
 
     // navigation to HomePage after 8 seconds
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         debugPrint("navigating to Home");
         Navigator.of(context).pushReplacement(MaterialPageRoute(

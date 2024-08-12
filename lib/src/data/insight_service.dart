@@ -9,7 +9,7 @@ import './insight.dart';
 
 class InsightService {
   static Future<Insight> getInsight() async {
-    const url = 'https://secondsight-backend.onrender.com/stars'; 
+    const url = 'https://secondsight-backend.onrender.com/insight'; 
 
     try {
       final response = await http.get(
@@ -20,14 +20,14 @@ class InsightService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final List<dynamic> responseData = json.decode(response.body);
-        return responseData.map((json) => Insight.fromJson(json)).toList()[0];
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return Insight(insight: responseData['response']);
       } else {
-        throw Exception('Failed to fetch moods. Status code: ${response.statusCode}');
+        throw Exception('Failed to fetch insight. Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error occurred while fetching moods: $error');
-      throw Exception('Error occurred while fetching moods: $error');
+      print('Error occurred while fetching insight: $error');
+      throw Exception('Error occurred while fetching insight: $error');
     }
   }
 }
