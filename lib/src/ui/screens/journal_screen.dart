@@ -5,6 +5,10 @@ import '../components/journal_popup.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../data/journal_entry.dart';
 import '../../data/entries.dart';
+import '../../constants.dart';
+import '../../data/moods.dart';
+import '../../data/mood_state.dart';
+import '../../data/mood_star.dart';
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -45,6 +49,27 @@ class _JournalScreenState extends State<JournalScreen> {
         updatedAt: entry['updatedAt']
       ));
     });
+  }
+
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
   }
 
   @override

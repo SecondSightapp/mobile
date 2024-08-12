@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 class Starboard extends StatelessWidget {
   const Starboard({super.key});
 
@@ -16,17 +18,35 @@ class Starboard extends StatelessWidget {
           ],
         ),
       ),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-            child: Image.asset(
-              'assets/images/constellation.png',
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.5,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+              child: Image.asset(
+                'assets/images/constellation.png',
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.5,
+              ),
             ),
-          )
-        ],
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.1,
+              child: Text(
+                'lets reflect on this month',
+                style: GoogleFonts.lexend(
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.2,
+            ),
+          ],
+        ),
       )
     );
   }

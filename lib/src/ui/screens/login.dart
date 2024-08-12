@@ -99,29 +99,6 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Text(
-                //   'create new account',
-                //   style: GoogleFonts.lexend(
-                //     textStyle: const TextStyle(
-                //       color: Color.fromRGBO(189, 172, 198, 1),
-                //       fontSize: 40,
-                //       fontWeight: FontWeight.w500,
-                //     ),
-                //   ),
-                //   textAlign: TextAlign.center,
-                // ),
-                // const SizedBox(height: 24),
-                // Text(
-                //   'login or signup here',
-                //   style: GoogleFonts.lexend(
-                //     textStyle: const TextStyle(
-                //       color: Color.fromRGBO(189, 172, 198, 1),
-                //       fontSize: 16,
-                //       fontWeight: FontWeight.w500,
-                //     ),
-                //   ),
-                //   textAlign: TextAlign.center,
-                // ),
                 Center(
                   child: Text(
                     "welcome to",

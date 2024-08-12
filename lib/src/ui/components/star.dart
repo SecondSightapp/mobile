@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../data/moods.dart';
 import '../../constants.dart';
+import '../../data/mood_state.dart';
 
 final Map<String, String> moodStars = {
   "angry": "assets/images/stars/angry_star.png",
@@ -28,8 +29,7 @@ class Star extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        DateTime now = DateTime.now();
-        moodState.addMoodData(DateTime.utc(now.year, now.month, now.day), mood);
+        MoodService.addStar(mood);
         if (isPoppable) {
           Navigator.pop(context);
         }

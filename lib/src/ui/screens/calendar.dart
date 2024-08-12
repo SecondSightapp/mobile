@@ -10,6 +10,7 @@ import '../../constants.dart';
 import '../../data/entries.dart';
 import '../../data/journal_entry.dart';
 import '../components/calendar_entry.dart';
+import '../../data/mood_star.dart';
 
 class Calendar extends StatefulWidget {
   const Calendar({super.key});
@@ -20,6 +21,27 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   
+
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
+  }
 
   Widget customDayBuilder(
     bool isSelectable,
@@ -39,7 +61,7 @@ class _CalendarState extends State<Calendar> {
       style: GoogleFonts.lexend(
         textStyle: const TextStyle(
           color: themePurple,
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.w400,
         ),
       ),
@@ -61,7 +83,7 @@ class _CalendarState extends State<Calendar> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: moods[moodState.moodLog[date]] ?? const Color.fromRGBO(233, 233, 233, 1),
+        color: moods[getMoodForDate(date)] ?? const Color.fromRGBO(233, 233, 233, 1),
       ),
       child: Center(
         child: display
