@@ -17,17 +17,9 @@ class Homepage extends StatelessWidget {
 
   List<Widget> topThreeEntries() {
     List<Widget> topThree = [];
-    Map<JournalEntry, DateTime> lastEdited = Map.fromEntries(
-      entries.map((entry) => MapEntry(entry, entry.createdAt))
-    );
+    
 
-    lastEdited.entries.toList().sort((a, b) => a.value.compareTo(b.value));
-
-    for (int i = 0; i < 3; i++) {
-      if (i < lastEdited.length) {
-        topThree.add(JournalCard(entry: entries[i]));
-      }
-    }
+    
     return topThree;
   }
 

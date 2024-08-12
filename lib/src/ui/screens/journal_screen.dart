@@ -3,11 +3,12 @@ import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'entry_screen.dart'; 
 import '../components/journal_popup.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../data/journal_entry.dart';
+import '../../data/entries.dart';
 import '../../data/entries.dart';
 import '../../data/journal_entry.dart';
 import '../../constants.dart';
 import '../../data/moods.dart';
-
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -17,12 +18,36 @@ class JournalScreen extends StatefulWidget {
 }
 
 class _JournalScreenState extends State<JournalScreen> {
-  final List<Map<String, dynamic>> _entries = [];
+  final List<JournalEntry> _entries = []; 
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchNotes(); 
+  }
+  
+  Future<void> _fetchNotes() async {
+  try {
+    final notes = await NoteService.getEntries(); 
+    setState(() {
+      _entries.addAll(notes); 
+    });
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to load notes: $e')),
+    );
+  }
+  }
 
   void _addEntry(Map<String, dynamic> entry) {
     setState(() {
-      _entries.add(entry);
-      entries.add(JournalEntry(entry['title'], entry['description']));
+      _entries.add(JournalEntry(
+        id: entry['id'], 
+        title: entry['title'], 
+        content: entry['description'], 
+        createdAt: entry['createdAt'], 
+        updatedAt: entry['updatedAt']
+      ));
     });
   }
 
@@ -86,7 +111,6 @@ class HeaderSection extends StatelessWidget {
     );
   }
 }
-
 class SortButton extends StatelessWidget {
   final void Function(Map<String, dynamic>) onCreateEntry;
 
@@ -212,7 +236,7 @@ class SortOptions extends StatelessWidget {
 }
 
 class EntryCard extends StatefulWidget {
-  final Map<String, dynamic> entry;
+  final JournalEntry entry;
 
   const EntryCard({super.key, required this.entry});
 
@@ -237,16 +261,16 @@ class _EntryCardState extends State<EntryCard> {
             context: context,
             builder: (BuildContext context) {
               return JournalPopup(
-                initialTitle: widget.entry['title'],
-                initialContent: widget.entry['description'] ?? 'No description',
+                initialTitle: widget.entry.title,
+                initialContent: widget.entry.content,
               );
             }
           );
 
           if (updatedEntry != null) {
             setState(() {
-              widget.entry['title'] = updatedEntry['title'] ?? widget.entry['title'];
-              widget.entry['description'] = updatedEntry['content'] ?? widget.entry['description'];
+              widget.entry.title = updatedEntry['title'] ?? widget.entry.title;
+              widget.entry.content = updatedEntry['content'] ?? widget.entry.content;
             });
           }
         },
@@ -261,22 +285,20 @@ class _EntryCardState extends State<EntryCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 20,
-                        height: 20,
-                        decoration: BoxDecoration(
-                          color: widget.entry['color'],
+                        width: 15,
+                        height: 15,
+                        decoration: const BoxDecoration(
+                          color: Colors.blue, 
                           shape: BoxShape.circle,
                         ),
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        widget.entry['title'],
-                        style: GoogleFonts.lexend(
-                          textStyle: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: themePurple,
-                          ),
+                        widget.entry.title,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF4C4C4C),
                         ),
                       ),
                     ],
@@ -293,7 +315,7 @@ class _EntryCardState extends State<EntryCard> {
                       ),
                       const SizedBox(height: 8.0),
                       Text(
-                        widget.entry['date'],
+                        widget.entry.createdAt.toIso8601String().split('T').first,
                         style: GoogleFonts.lexend(
                           textStyle: const TextStyle(
                             fontSize: 14,

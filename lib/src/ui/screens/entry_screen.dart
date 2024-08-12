@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
+import '../../data/entries.dart';
 import 'package:secondsight/src/data/journal_entry.dart';
 import 'package:secondsight/src/data/entries.dart';
 import 'package:secondsight/src/data/moods.dart';
@@ -102,17 +103,30 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
             const SizedBox(height: 24.0),
             Center(
               child: ElevatedButton(
-                onPressed: (_isTitleEmpty || _isDescriptionEmpty) ? null : () {
+                onPressed: (_isTitleEmpty || _isDescriptionEmpty) ? null : () async {
                   if (!_isTitleEmpty && !_isDescriptionEmpty) {
-                    DateTime today = DateTime.now();
-                    String dateString = today.toIso8601String().split('T').first;
-                    final newEntry = {
-                      'title': _titleController.text,
-                      'description': _descriptionController.text,
-                      'color': moods[moodState.moodLog[DateTime.utc(today.year, today.month, today.day)]],
-                      'date': '${dateString.substring(5, 7)}/${dateString.substring(8, 10)}/${dateString.substring(0, 4)}',
-                    };
-                    Navigator.pop(context, newEntry);
+                    try {
+                      await NoteService.createEntry(
+                        _titleController.text, 
+                        _descriptionController.text,
+                      );
+                      Navigator.pop(context);
+                    } catch (error) {
+                      print('Failed to create note: $error');
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Error'),
+                          content: const Text('Failed to create note. Please try again later.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
