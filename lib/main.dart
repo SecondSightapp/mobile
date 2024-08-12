@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
 import 'package:secondsight/src/ui/screens/journal_screen.dart';
 import 'package:secondsight/src/ui/screens/loading_screen.dart';
+import 'package:secondsight/src/ui/screens/login.dart';
 import 'package:secondsight/src/ui/screens/starboard.dart';
 import 'package:secondsight/src/ui/screens/calendar.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
@@ -31,7 +32,7 @@ class SecondSightApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromRGBO(56, 48, 115, 1)),
         ),
         // making this home for now for testing purposes, will be login page otherwise and should only go to homepage if logged in
-        home: const LoadingScreen(),
+        home: const LoginPage(),
       ),
     );
   }
