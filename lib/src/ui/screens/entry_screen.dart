@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
 import '../../data/entries.dart';
-import 'package:secondsight/src/data/journal_entry.dart';
-import 'package:secondsight/src/data/entries.dart';
-import 'package:secondsight/src/data/moods.dart';
-import 'package:secondsight/src/data/mood_state.dart';
-import 'package:secondsight/src/constants.dart';
 
 class CreateEntryScreen extends StatefulWidget {
   const CreateEntryScreen({super.key});
