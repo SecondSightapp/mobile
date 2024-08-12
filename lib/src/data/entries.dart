@@ -59,7 +59,7 @@ class NoteService {
   }
 
   static Future<void> updateEntry(String id, String title, String content) async {
-    final url = 'https://secondsight-backend.onrender.com/notes/{id}';
+    final url = 'https://secondsight-backend.onrender.com/notes/$id';
 
     final updatedData = {
       'title': title,

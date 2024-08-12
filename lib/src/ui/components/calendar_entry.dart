@@ -42,24 +42,7 @@ class _CalendarEntryState extends State<CalendarEntry> {
           side: const BorderSide(color: Color(0xFFE0E0E0)),
         ),
         child: InkWell(
-          onTap: () async {
-            final result = await showDialog<Map<String, String>>(
-              context: context,
-              builder: (BuildContext context) {
-                return JournalPopup(
-                  initialTitle: title,
-                  initialContent: content,
-                );
-              },
-            );
-
-            if (result != null) {
-              setState(() {
-                title = result['title'] ?? title;
-                content = result['content'] ?? content;
-              });
-            }
-          },
+          
           child: Column(
             children: [
               Padding(

@@ -39,24 +39,7 @@ class _JournalCardState extends State<JournalCard> {
           side: const BorderSide(color: Color(0xFFE0E0E0)),
         ),
         child: InkWell(
-          onTap: () async {
-            final result = await showDialog<Map<String, String>>(
-              context: context,
-              builder: (BuildContext context) {
-                return JournalPopup(
-                  initialTitle: _title,
-                  initialContent: _content,
-                );
-              },
-            );
-
-            if (result != null) {
-              setState(() {
-                _title = result['title'] ?? '';
-                _content = result['content'] ?? '';
-              });
-            }
-          },
+          
           child: Column(
             children: [
               Padding(
