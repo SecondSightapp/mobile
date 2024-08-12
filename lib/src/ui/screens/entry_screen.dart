@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
+import '../../data/entries.dart';
 
 class CreateEntryScreen extends StatefulWidget {
   const CreateEntryScreen({super.key});
@@ -12,7 +13,6 @@ class CreateEntryScreen extends StatefulWidget {
 class _CreateEntryScreenState extends State<CreateEntryScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final Color _fixedColor = Colors.blue; // needs to depend on mood of day
 
   bool _isTitleEmpty = true;
   bool _isDescriptionEmpty = true;
@@ -94,15 +94,30 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
             const SizedBox(height: 24.0),
             Center(
               child: ElevatedButton(
-                onPressed: (_isTitleEmpty || _isDescriptionEmpty) ? null : () {
+                onPressed: (_isTitleEmpty || _isDescriptionEmpty) ? null : () async {
                   if (!_isTitleEmpty && !_isDescriptionEmpty) {
-                    final newEntry = {
-                      'title': _titleController.text,
-                      'description': _descriptionController.text,
-                      'color': _fixedColor,
-                      'date': DateTime.now().toIso8601String().split('T').first,
-                    };
-                    Navigator.pop(context, newEntry);
+                    try {
+                      await NoteService.createEntry(
+                        _titleController.text, 
+                        _descriptionController.text,
+                      );
+                      Navigator.pop(context);
+                    } catch (error) {
+                      print('Failed to create note: $error');
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Error'),
+                          content: const Text('Failed to create note. Please try again later.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(
