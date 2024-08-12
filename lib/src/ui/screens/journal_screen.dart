@@ -7,6 +7,8 @@ import '../../data/entries.dart';
 import '../../data/journal_entry.dart';
 import '../../constants.dart';
 import '../../data/moods.dart';
+import '../../data/mood_state.dart';
+import '../../data/mood_star.dart';
 
 
 class JournalScreen extends StatefulWidget {
@@ -24,6 +26,27 @@ class _JournalScreenState extends State<JournalScreen> {
       _entries.add(entry);
       entries.add(JournalEntry(entry['title'], entry['description']));
     });
+  }
+
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
   }
 
   @override
@@ -44,7 +67,7 @@ class _JournalScreenState extends State<JournalScreen> {
                 return EntryCard(entry: {
                   'title': e.title,
                   'description': e.content,
-                  'color': moods[moodState.moodLog[DateTime.utc(e.createdAt.year, e.createdAt.month, e.createdAt.day)]],
+                  'color': moods[getMoodForDate(e.createdAt)],
                   'date': '${dateString.substring(5, 7)}/${dateString.substring(8, 10)}/${dateString.substring(0, 4)}',
                 });
               },

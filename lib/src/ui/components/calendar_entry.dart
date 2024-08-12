@@ -6,6 +6,8 @@ import '../../data/journal_entry.dart';
 import '../../data/entries.dart';
 import '../../constants.dart';
 import '../../data/moods.dart';
+import '../../data/mood_state.dart';
+import '../../data/mood_star.dart';
 
 class CalendarEntry extends StatefulWidget {
   final String title;
@@ -28,6 +30,27 @@ class _CalendarEntryState extends State<CalendarEntry> {
     super.initState();
     title = widget.entry.title;
     content = widget.entry.content;
+  }
+
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
   }
 
   @override
@@ -79,7 +102,7 @@ class _CalendarEntryState extends State<CalendarEntry> {
                       width: 20,
                       height: 20,
                       decoration: BoxDecoration(
-                        color: moods[moodState.moodLog[DateTime.utc(widget.date.year, widget.date.month, widget.date.day)]] ?? const Color.fromRGBO(233, 233, 233, 1),
+                        color: moods[getMoodForDate(widget.date)] ?? const Color.fromRGBO(233, 233, 233, 1),
                         shape: BoxShape.circle,
                       ),
                     ),

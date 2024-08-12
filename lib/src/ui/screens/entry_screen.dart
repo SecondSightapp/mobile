@@ -6,6 +6,7 @@ import 'package:secondsight/src/data/entries.dart';
 import 'package:secondsight/src/data/moods.dart';
 import 'package:secondsight/src/data/mood_state.dart';
 import 'package:secondsight/src/constants.dart';
+import '../../data/mood_star.dart';
 
 class CreateEntryScreen extends StatefulWidget {
   const CreateEntryScreen({super.key});
@@ -33,6 +34,27 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
       _isTitleEmpty = _titleController.text.isEmpty;
       _isDescriptionEmpty = _descriptionController.text.isEmpty;
     });
+  }
+
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
   }
 
   @override
@@ -109,7 +131,7 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
                     final newEntry = {
                       'title': _titleController.text,
                       'description': _descriptionController.text,
-                      'color': moods[moodState.moodLog[DateTime.utc(today.year, today.month, today.day)]],
+                      'color': moods[getMoodForDate(today)],
                       'date': '${dateString.substring(5, 7)}/${dateString.substring(8, 10)}/${dateString.substring(0, 4)}',
                     };
                     Navigator.pop(context, newEntry);
