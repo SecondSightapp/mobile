@@ -10,6 +10,7 @@ import '../../data/moods.dart';
 import '../../data/mood_state.dart';
 import '../../data/mood_star.dart';
 
+
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
 
@@ -244,7 +245,6 @@ class SortOptions extends StatelessWidget {
     );
   }
 }
-
 class EntryCard extends StatefulWidget {
   final JournalEntry entry;
 
