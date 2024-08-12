@@ -3,6 +3,11 @@ import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'entry_screen.dart'; 
 import '../components/journal_popup.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../../data/entries.dart';
+import '../../data/journal_entry.dart';
+import '../../constants.dart';
+import '../../data/moods.dart';
+
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -17,6 +22,7 @@ class _JournalScreenState extends State<JournalScreen> {
   void _addEntry(Map<String, dynamic> entry) {
     setState(() {
       _entries.add(entry);
+      entries.add(JournalEntry(entry['title'], entry['description']));
     });
   }
 
@@ -31,9 +37,16 @@ class _JournalScreenState extends State<JournalScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16.0),
-              itemCount: _entries.length,
+              itemCount: entries.length,
               itemBuilder: (context, index) {
-                return EntryCard(entry: _entries[index]);
+                JournalEntry e = entries[index];
+                String dateString = e.createdAt.toIso8601String().split('T').first;
+                return EntryCard(entry: {
+                  'title': e.title,
+                  'description': e.content,
+                  'color': moods[moodState.moodLog[DateTime.utc(e.createdAt.year, e.createdAt.month, e.createdAt.day)]],
+                  'date': '${dateString.substring(5, 7)}/${dateString.substring(8, 10)}/${dateString.substring(0, 4)}',
+                });
               },
             ),
           ),
@@ -105,19 +118,21 @@ class SortButton extends StatelessWidget {
               shadowColor: Colors.transparent,
               side: const BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Sort by',
-                  style: TextStyle(
-                    color: themePurple,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                  style: GoogleFonts.lexend(
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: themePurple,
+                    ),
                   ),
                 ),
-                SizedBox(width: 5.0),
-                Icon(Icons.keyboard_arrow_down_rounded),
+                const SizedBox(width: 5.0),
+                const Icon(Icons.keyboard_arrow_down_rounded, color: themePurple),
               ],
             ),
           ),
@@ -143,19 +158,21 @@ class SortButton extends StatelessWidget {
               shadowColor: Colors.transparent,
               side: const BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
             ),
-            child: const Row(
+            child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Create',
-                  style: TextStyle(
-                    color: themePurple,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
+                  style: GoogleFonts.lexend(
+                    textStyle: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: themePurple,
+                    ),
                   ),
                 ),
-                SizedBox(width: 5.0),
-                Icon(Icons.add),
+                const SizedBox(width: 5.0),
+                const Icon(Icons.add),
               ],
             ),
           ),
@@ -175,14 +192,14 @@ class SortOptions extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: const Icon(Icons.sort_by_alpha),
+            leading: const Icon(Icons.sort_by_alpha, color: themePurple),
             title: const Text('Sort by Mood type'),
             onTap: () {
               // TODO: handle sort by mood
             },
           ),
           ListTile(
-            leading: const Icon(Icons.bookmark),
+            leading: const Icon(Icons.bookmark, color: themePurple),
             title: const Text('Sort by Bookmarks'),
             onTap: () {
               // TODO: handle sort by bookmarks
@@ -193,6 +210,7 @@ class SortOptions extends StatelessWidget {
     );
   }
 }
+
 class EntryCard extends StatefulWidget {
   final Map<String, dynamic> entry;
 
@@ -243,8 +261,8 @@ class _EntryCardState extends State<EntryCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        width: 15,
-                        height: 15,
+                        width: 20,
+                        height: 20,
                         decoration: BoxDecoration(
                           color: widget.entry['color'],
                           shape: BoxShape.circle,
@@ -253,10 +271,12 @@ class _EntryCardState extends State<EntryCard> {
                       const SizedBox(height: 8.0),
                       Text(
                         widget.entry['title'],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4C4C4C),
+                        style: GoogleFonts.lexend(
+                          textStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: themePurple,
+                          ),
                         ),
                       ),
                     ],
@@ -266,7 +286,7 @@ class _EntryCardState extends State<EntryCard> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.bookmark_border, color: Color(0xFF4C4C4C)),
+                        icon: const Icon(Icons.bookmark_border, color: themePurple),
                         onPressed: () {
                           // TODO: handle bookmark press
                         },
@@ -274,9 +294,12 @@ class _EntryCardState extends State<EntryCard> {
                       const SizedBox(height: 8.0),
                       Text(
                         widget.entry['date'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF9E9E9E),
+                        style: GoogleFonts.lexend(
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: themePurple,
+                          ),
                         ),
                       ),
                     ],

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:secondsight/src/data/token.dart';
 import 'package:secondsight/src/ui/screens/loading_screen.dart';
@@ -96,59 +99,136 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Text(
-                  'create new account',
-                  style: TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Ensure text is visible on the background
+                // Text(
+                //   'create new account',
+                //   style: GoogleFonts.lexend(
+                //     textStyle: const TextStyle(
+                //       color: Color.fromRGBO(189, 172, 198, 1),
+                //       fontSize: 40,
+                //       fontWeight: FontWeight.w500,
+                //     ),
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
+                // const SizedBox(height: 24),
+                // Text(
+                //   'login or signup here',
+                //   style: GoogleFonts.lexend(
+                //     textStyle: const TextStyle(
+                //       color: Color.fromRGBO(189, 172, 198, 1),
+                //       fontSize: 16,
+                //       fontWeight: FontWeight.w500,
+                //     ),
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
+                Center(
+                  child: Text(
+                    "welcome to",
+                    style: GoogleFonts.lexend(
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFBDACC6),
+                      fontSize: 32,
+                    ),
                   ),
-                  textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 24),
-                const Text(
-                  'login or signup here',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white, // Ensure text is visible on the background
+                Center(
+                  child: Text(
+                    "second sight",
+                    style: GoogleFonts.lexend(
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFFD1C4C5),
+                      fontSize: 32,
+                      shadows: [
+                        const Shadow(
+                          blurRadius: 10.0,
+                          color: Colors.white,
+                          offset: Offset(0, 0),
+                        )
+                      ]
+                    ),
                   ),
-                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 48),
-                ElevatedButton.icon(
-                  onPressed: _launchOAuthURL,
-                  icon: const Icon(Icons.account_circle), // Add an icon to the button
-                  label: const Text('Sign in with Google'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(16),
-                    backgroundColor: Colors.white,
-                    foregroundColor: Colors.black,
+
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: ElevatedButton.icon(
+                    onPressed: _launchOAuthURL,
+                    icon: Image.asset(
+                      'assets/images/logos/google.png', // Update with your image path
+                      width: 24,
+                      height: 24,
+                    ), // Add an icon to the button
+                    label: Text(
+                      'Continue with Google',
+                        style: GoogleFonts.lexend(
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: themePurple,
+                          fontSize: 16,
+                        ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: Colors.white.withOpacity(0.7),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Implement Facebook Sign In
-                  },
-                  icon: const Icon(Icons.facebook), // Add an icon to the button
-                  label: const Text('Sign in with Facebook'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(16),
-                    backgroundColor: Colors.blue[800],
-                    foregroundColor: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Implement Facebook Sign In
+                    },
+                    icon: Image.asset(
+                      'assets/images/logos/facebook.png', // Update with your image path
+                      width: 24,
+                      height: 24,
+                    ), // Add an icon to the button
+                    label: Text(
+                      'Continue with Facebook',
+                        style: GoogleFonts.lexend(
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: themePurple,
+                          fontSize: 16,
+                        ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: Colors.white.withOpacity(0.7),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton.icon(
-                  onPressed: () {
-                    // Implement Apple Sign In
-                  },
-                  icon: const Icon(Icons.apple), // Add an icon to the button
-                  label: const Text('Sign in with Apple'),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(16),
-                    backgroundColor: Colors.black,
-                    foregroundColor: Colors.white,
+                Padding(
+                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Implement Apple Sign In
+                    },
+                    icon: Image.asset(
+                      'assets/images/logos/apple.png', // Update with your image path
+                      width: 24,
+                      height: 24,
+                    ), // Add an icon to the button
+                    label: Text(
+                      'Continue with Apple',
+                        style: GoogleFonts.lexend(
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          color: themePurple,
+                          fontSize: 16,
+                        ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(16),
+                      backgroundColor: Colors.white.withOpacity(0.7),
+                    ),
                   ),
                 ),
               ],

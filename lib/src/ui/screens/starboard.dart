@@ -16,6 +16,18 @@ class Starboard extends StatelessWidget {
           ],
         ),
       ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+            child: Image.asset(
+              'assets/images/constellation.png',
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.5,
+            ),
+          )
+        ],
+      )
     );
   }
 }

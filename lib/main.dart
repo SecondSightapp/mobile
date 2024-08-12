@@ -9,6 +9,7 @@ import 'package:secondsight/src/ui/screens/calendar.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
 import 'package:provider/provider.dart';
 import 'package:secondsight/src/data/mood_state.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const SecondSightApp());

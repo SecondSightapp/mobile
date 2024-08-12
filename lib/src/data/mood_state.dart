@@ -16,6 +16,12 @@ class MoodState extends ChangeNotifier {
     DateTime.utc(2024, 8, 1): "disgusted",
     DateTime.utc(2024, 8, 2): "calm",
     DateTime.utc(2024, 8, 3): "delighted",
+    DateTime.utc(2024, 8, 4): "angry",
+    DateTime.utc(2024, 8, 5): "worried",
+    DateTime.utc(2024, 8, 6): "disgusted",
+    DateTime.utc(2024, 8, 7): "calm",
+    DateTime.utc(2024, 8, 8): "calm",
+    DateTime.utc(2024, 8, 9): "calm",
   };
 
   Map<DateTime, String> get moodLog => _moodLog;

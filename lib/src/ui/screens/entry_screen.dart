@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
+import 'package:secondsight/src/data/journal_entry.dart';
+import 'package:secondsight/src/data/entries.dart';
+import 'package:secondsight/src/data/moods.dart';
+import 'package:secondsight/src/data/mood_state.dart';
+import 'package:secondsight/src/constants.dart';
 
 class CreateEntryScreen extends StatefulWidget {
   const CreateEntryScreen({super.key});
@@ -12,7 +17,6 @@ class CreateEntryScreen extends StatefulWidget {
 class _CreateEntryScreenState extends State<CreateEntryScreen> {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final Color _fixedColor = Colors.blue; // needs to depend on mood of day
 
   bool _isTitleEmpty = true;
   bool _isDescriptionEmpty = true;
@@ -53,12 +57,14 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Title',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4A4A4A),
+              style: GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                  color: themePurple,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -71,12 +77,14 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
               style: GoogleFonts.lexend(),
             ),
             const SizedBox(height: 16.0),
-            const Text(
-              'Description',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4A4A4A),
+            Text(
+              'Content',
+              style: GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                  color: themePurple,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -96,11 +104,13 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
               child: ElevatedButton(
                 onPressed: (_isTitleEmpty || _isDescriptionEmpty) ? null : () {
                   if (!_isTitleEmpty && !_isDescriptionEmpty) {
+                    DateTime today = DateTime.now();
+                    String dateString = today.toIso8601String().split('T').first;
                     final newEntry = {
                       'title': _titleController.text,
                       'description': _descriptionController.text,
-                      'color': _fixedColor,
-                      'date': DateTime.now().toIso8601String().split('T').first,
+                      'color': moods[moodState.moodLog[DateTime.utc(today.year, today.month, today.day)]],
+                      'date': '${dateString.substring(5, 7)}/${dateString.substring(8, 10)}/${dateString.substring(0, 4)}',
                     };
                     Navigator.pop(context, newEntry);
                   }
