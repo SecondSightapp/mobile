@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/src/ui/themes/source_colors.dart';
 import '../../data/entries.dart';
+import 'package:secondsight/src/data/journal_entry.dart';
+import 'package:secondsight/src/data/entries.dart';
+import 'package:secondsight/src/data/moods.dart';
+import 'package:secondsight/src/data/mood_state.dart';
+import 'package:secondsight/src/constants.dart';
 
 class CreateEntryScreen extends StatefulWidget {
   const CreateEntryScreen({super.key});
@@ -53,12 +58,14 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
+            Text(
               'Title',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4A4A4A),
+              style: GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                  color: themePurple,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             const SizedBox(height: 8.0),
@@ -71,12 +78,14 @@ class _CreateEntryScreenState extends State<CreateEntryScreen> {
               style: GoogleFonts.lexend(),
             ),
             const SizedBox(height: 16.0),
-            const Text(
-              'Description',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF4A4A4A),
+            Text(
+              'Content',
+              style: GoogleFonts.lexend(
+                textStyle: const TextStyle(
+                  color: themePurple,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             const SizedBox(height: 8.0),

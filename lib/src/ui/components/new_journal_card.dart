@@ -14,9 +14,10 @@ class NewJournalCard extends StatelessWidget {
       height: 182,
       child: Card(
         color: Colors.white,
-        elevation: 4,
+        elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
+          side: const BorderSide(color: Color(0xFFE0E0E0)),
         ),
         child: Column(
           children: [
