@@ -57,4 +57,35 @@ class NoteService {
       throw Exception('Error occurred while creating note: $error');
     }
   }
+
+  static Future<void> updateEntry(String id, String title, String content) async {
+    final url = 'https://secondsight-backend.onrender.com/notes/$id';
+
+    final updatedData = {
+      'title': title,
+      'content': content,
+    };
+    
+    try{
+      final response = await http.put(
+        Uri.parse(url),
+        headers: {
+          'Authorization': 'Bearer ${TokenService.token}', 
+          'Content-Type': 'application/json', 
+        },
+        body: json.encode(updatedData),
+      );
+      if(response.statusCode == 200){
+        print("Note updated!!!");
+        print("response body: ${response.body}");
+      } else {
+        print("failed to update");
+        print("response body: ${response.body}");
+      }
+
+    } catch(error){
+      throw Exception("Error occured: $error");
+    }
+
+  }
 }

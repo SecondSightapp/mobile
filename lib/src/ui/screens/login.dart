@@ -100,7 +100,9 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Center(
-                  child: Text(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Text(
                     "welcome to",
                     style: GoogleFonts.lexend(
                       fontStyle: FontStyle.normal,
@@ -108,10 +110,14 @@ class _LoginPageState extends State<LoginPage> {
                       color: const Color(0xFFBDACC6),
                       fontSize: 32,
                     ),
+                    ),
                   ),
                 ),
                 Center(
-                  child: Text(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: 
+                    Text(
                     "second sight",
                     style: GoogleFonts.lexend(
                       fontStyle: FontStyle.normal,
@@ -127,6 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                       ]
                     ),
                   ),
+                  ) 
                 ),
                 const SizedBox(height: 48),
 
