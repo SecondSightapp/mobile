@@ -18,12 +18,14 @@ class JournalScreen extends StatefulWidget {
 }
 
 class _JournalScreenState extends State<JournalScreen> {
-  final List<JournalEntry> _entries = []; 
+  final List<JournalEntry> _entries = [];
+  final List<MoodStar> _moodLog = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchNotes(); 
+    _fetchNotes();
+    getMoods();
   }
   
   Future<void> _fetchNotes() async {
@@ -51,8 +53,6 @@ class _JournalScreenState extends State<JournalScreen> {
     });
   }
 
-  final List<MoodStar> _moodLog = [];
-
   Future<void> getMoods() async {
     try {
       final moods = await MoodService.getStars(); 
@@ -68,7 +68,7 @@ class _JournalScreenState extends State<JournalScreen> {
 
   String getMoodForDate(DateTime date) {
     DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
-    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
     return mood.mood.toString();
   }
 
@@ -244,6 +244,7 @@ class SortOptions extends StatelessWidget {
     );
   }
 }
+
 class EntryCard extends StatefulWidget {
   final JournalEntry entry;
 
@@ -254,6 +255,33 @@ class EntryCard extends StatefulWidget {
 }
 
 class _EntryCardState extends State<EntryCard> {
+  final List<MoodStar> _moodLog = [];
+
+  Future<void> getMoods() async {
+    try {
+      final moods = await MoodService.getStars(); 
+      setState(() {
+        _moodLog.addAll(moods); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load moods: $e')),
+      );
+    }
+  }
+
+  String getMoodForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    return mood.mood.toString();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMoods();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -296,8 +324,8 @@ class _EntryCardState extends State<EntryCard> {
                       Container(
                         width: 15,
                         height: 15,
-                        decoration: const BoxDecoration(
-                          color: Colors.blue, 
+                        decoration: BoxDecoration(
+                          color: moods[getMoodForDate(widget.entry.createdAt)] ?? Color.fromRGBO(233, 233, 233, 1),
                           shape: BoxShape.circle,
                         ),
                       ),

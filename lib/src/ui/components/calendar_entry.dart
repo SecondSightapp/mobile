@@ -24,15 +24,15 @@ class _CalendarEntryState extends State<CalendarEntry> {
 
   late String title;
   late String content;
+  final List<MoodStar> _moodLog = [];
 
   @override
   void initState() {
     super.initState();
+    getMoods();
     title = widget.entry.title;
     content = widget.entry.content;
   }
-
-  final List<MoodStar> _moodLog = [];
 
   Future<void> getMoods() async {
     try {
@@ -49,7 +49,7 @@ class _CalendarEntryState extends State<CalendarEntry> {
 
   String getMoodForDate(DateTime date) {
     DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
-    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
     return mood.mood.toString();
   }
 

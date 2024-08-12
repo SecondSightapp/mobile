@@ -20,9 +20,9 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-  
-
   final List<MoodStar> _moodLog = [];
+  final List<JournalEntry> _entries = [];
+  List<JournalEntry> _selectedDayEntries = [];
 
   Future<void> getMoods() async {
     try {
@@ -37,10 +37,35 @@ class _CalendarState extends State<Calendar> {
     }
   }
 
+  Future<void> getEntries() async {
+    try {
+      final entries = await NoteService.getEntries(); 
+      setState(() {
+        _entries.addAll(entries); 
+      });
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load entries: $e')),
+      );
+    }
+  }
+
   String getMoodForDate(DateTime date) {
     DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
-    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
     return mood.mood.toString();
+  }
+
+  List<JournalEntry> getEntriesForDate(DateTime date) {
+    DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
+    return _entries.where((entry) => DateTime.utc(entry.createdAt.year, entry.createdAt.month, entry.createdAt.day) == dateUtc).toList();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMoods();
+    getEntries();
   }
 
   Widget customDayBuilder(
@@ -146,13 +171,31 @@ class _CalendarState extends State<Calendar> {
                 },
                 onDayPressed: (p0, p1) {
                   setState(() {
-                    
+                    _selectedDayEntries = getEntriesForDate(p0);
                   });
                 },
               ),
             ),
           ),
-          
+          Expanded(
+            child: _selectedDayEntries.isEmpty
+            ? Center(
+              child: Text(
+                'no entries for this day',
+                style: GoogleFonts.lexend(
+                  textStyle: const TextStyle(
+                    color: themePurple,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ) : ListView(
+              padding: const EdgeInsets.all(8.0),
+              scrollDirection: Axis.vertical,
+              children: _selectedDayEntries.map((e) => CalendarEntry(entry: e)).toList(),
+            ),
+          ),
         ],
       ),
     );

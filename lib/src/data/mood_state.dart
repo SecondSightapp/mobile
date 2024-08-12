@@ -19,8 +19,9 @@ class MoodService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final List<dynamic> responseData = json.decode(response.body);
-        return responseData.map((json) => MoodStar.fromJson(json)).toList();
+        print(response.body);
+        final Map<String, dynamic> responseData = json.decode(response.body);
+        return responseData['stars'].map<MoodStar>((json) => MoodStar.fromJson(json)).toList();
       } else {
         throw Exception('Failed to fetch moods. Status code: ${response.statusCode}');
       }
@@ -34,7 +35,7 @@ class MoodService {
     const url = 'https://secondsight-backend.onrender.com/stars';
 
     final starData = {
-      'mood': mood,
+      'mood': mood.toUpperCase(),
     };
 
     try {

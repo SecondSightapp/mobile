@@ -5,18 +5,18 @@ import '../components/navbar.dart';
 import '../components/star.dart';
 
 final stars = [
-  Star(mood: "sad", isPoppable: true),
-  Star(mood: "happy", isPoppable: true),
-  Star(mood: "angry", isPoppable: true),
-  Star(mood: "cool", isPoppable: true),
-  Star(mood: "neutral", isPoppable: true),
-  Star(mood: "worried", isPoppable: true),
-  Star(mood: "chill", isPoppable: true),
-  Star(mood: "disgusted", isPoppable: true),
-  Star(mood: "calm", isPoppable: true),
-  Star(mood: "delighted", isPoppable: true),
-  Star(mood: "naughty", isPoppable: true),
-  Star(mood: "annoyed", isPoppable: true),
+  Star(mood: "SAD", isPoppable: true),
+  Star(mood: "HAPPY", isPoppable: true),
+  Star(mood: "ANGRY", isPoppable: true),
+  Star(mood: "COOL", isPoppable: true),
+  Star(mood: "NEUTRAL", isPoppable: true),
+  Star(mood: "WORRIED", isPoppable: true),
+  Star(mood: "CHILL", isPoppable: true),
+  Star(mood: "DISGUSTED", isPoppable: true),
+  Star(mood: "CALM", isPoppable: true),
+  Star(mood: "DELIGHTED", isPoppable: true),
+  Star(mood: "NAUGHTY", isPoppable: true),
+  Star(mood: "ANNOYED", isPoppable: true),
 ];
 
 class MoodPicker extends StatelessWidget {

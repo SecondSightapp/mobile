@@ -32,6 +32,7 @@ class _CalendarWeekState extends State<CalendarWeek> {
     try {
       final moods = await MoodService.getStars(); 
       setState(() {
+        _moodLog.clear();
         _moodLog.addAll(moods); 
       });
     } catch (e) {
@@ -43,8 +44,14 @@ class _CalendarWeekState extends State<CalendarWeek> {
 
   String getMoodForDate(DateTime date) {
     DateTime dateUtc = DateTime.utc(date.year, date.month, date.day);
-    MoodStar? mood = _moodLog.firstWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
+    MoodStar? mood = _moodLog.lastWhere((mood) => DateTime.utc(mood.date.year, mood.date.month, mood.date.day) == dateUtc, orElse: () => MoodStar(date: dateUtc, mood: "neutral"));
     return mood.mood.toString();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getMoods();
   }
 
   Widget customDayBuilder(

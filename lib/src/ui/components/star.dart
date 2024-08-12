@@ -4,18 +4,18 @@ import '../../constants.dart';
 import '../../data/mood_state.dart';
 
 final Map<String, String> moodStars = {
-  "angry": "assets/images/stars/angry_star.png",
-  "annoyed": "assets/images/stars/annoyed_star.png",
-  "calm": "assets/images/stars/calm_star.png",
-  "chill": "assets/images/stars/chill_star.png",
-  "cool": "assets/images/stars/cool_star.png",
-  "delighted": "assets/images/stars/delighted_star.png",
-  "disgusted": "assets/images/stars/disgusted_star.png",
-  "happy": "assets/images/stars/happy_star.png",
-  "naughty": "assets/images/stars/naughty_star.png",
-  "neutral": "assets/images/stars/neutral_star.png",
-  "sad": "assets/images/stars/sad_star.png",
-  "worried": "assets/images/stars/worried_star.png",
+  "ANGRY": "assets/images/stars/angry_star.png",
+  "ANNOYED": "assets/images/stars/annoyed_star.png",
+  "CALM": "assets/images/stars/calm_star.png",
+  "CHILL": "assets/images/stars/chill_star.png",
+  "COOL": "assets/images/stars/cool_star.png",
+  "DELIGHTED": "assets/images/stars/delighted_star.png",
+  "DISGUSTED": "assets/images/stars/disgusted_star.png",
+  "HAPPY": "assets/images/stars/happy_star.png",
+  "NAUGHTY": "assets/images/stars/naughty_star.png",
+  "NEUTRAL": "assets/images/stars/neutral_star.png",
+  "SAD": "assets/images/stars/sad_star.png",
+  "WORRIED": "assets/images/stars/worried_star.png",
 };
 
 class Star extends StatelessWidget {
@@ -29,7 +29,7 @@ class Star extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        MoodService.addStar(mood);
+        MoodService.addStar(mood.toUpperCase());
         if (isPoppable) {
           Navigator.pop(context);
         }
