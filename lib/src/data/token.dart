@@ -4,6 +4,11 @@ import 'dart:convert';
 class TokenService {
   static String _token = '';
 
+  static void setToken(String token) {
+    _token = token;
+    print("Recieved token");
+  } 
+
   static Future<void> fetchToken() async {
     final url = 'https://secondsight-backend.onrender.com/authenticate';
 

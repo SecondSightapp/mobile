@@ -1,19 +1,80 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
+import 'package:secondsight/src/data/token.dart';
+import 'package:uni_links/uni_links.dart';
+import 'package:flutter_custom_tabs/flutter_custom_tabs.dart';
+import 'dart:async';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: LoginBody(),
+  _LoginPageState createState() => _LoginPageState();
+}
+
+void _launchOAuthURL() async {
+  const oauthUrl = 'https://secondsight-backend.onrender.com/authenticate/android';
+
+  try {
+    await launchUrl(
+      Uri.parse(oauthUrl),      
+      customTabsOptions: CustomTabsOptions(
+        colorSchemes: CustomTabsColorSchemes.defaults(),
+        shareState: CustomTabsShareState.on,
+        urlBarHidingEnabled: true,
+        showTitle: true,
+        closeButton: CustomTabsCloseButton(
+          icon: CustomTabsCloseButtonIcons.back,
+        ),
+      ),
     );
+  } catch (e) {
+    print("Error launching OAuth URL: $e");
   }
 }
 
-class LoginBody extends StatelessWidget {
-  const LoginBody({super.key});
+class _LoginPageState extends State<LoginPage> {
+  final String initialURL = "https://secondsight-backend.onrender.com/authenticate?device_id=meow&device_name=kitty";
+  final String validURL = "https://secondsight-backend.onrender.com/authenticate?continue";
+
+  StreamSubscription? _sub;
+
+  @override
+  void initState() {
+    super.initState();
+    // Listen for incoming deep links
+    _sub = uriLinkStream.listen((Uri? uri) {
+      if (uri != null) {
+        print("Received URI: $uri");
+
+        // Handle the received deep link
+        _handleDeepLink(uri);
+      }
+    }, onError: (err) {
+      print("Failed to receive URI: $err");
+    });
+  }
+
+  void _handleDeepLink(Uri uri) {
+    // Ensure the scheme, host, and path are what you expect
+    if (uri.scheme == 'secondsight' && uri.host == 'oauth' && uri.path == '/callback') {
+      // Extract the authorization code from the query parameters
+      String? authCode = uri.queryParameters['token'];
+      if (authCode != null) {
+        print("Authorization code: $authCode");
+        TokenService.setToken(authCode);
+        // Continue with your OAuth flow, such as exchanging the code for an access token
+      } else {
+        print("Authorization code not found in the URL");
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +112,7 @@ class LoginBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 48),
                 ElevatedButton.icon(
-                  onPressed: _handleGoogleSignIn,
+                  onPressed: _launchOAuthURL,
                   icon: const Icon(Icons.account_circle), // Add an icon to the button
                   label: const Text('Sign in with Google'),
                   style: ElevatedButton.styleFrom(
@@ -93,16 +154,5 @@ class LoginBody extends StatelessWidget {
       ],
     );
   }
-
-  Future<void> _handleGoogleSignIn() async {
-    // try {
-    //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    //   if (googleUser != null) {
-    //     // Successfully signed in
-    //     print('Signed in: ${googleUser.displayName}');
-    //   }
-    // } catch (error) {
-    //   print('Error signing in with Google: $error');
-    // }
-  }
 }
+  
