@@ -5,10 +5,6 @@ import '../components/journal_popup.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../data/journal_entry.dart';
 import '../../data/entries.dart';
-import '../../data/entries.dart';
-import '../../data/journal_entry.dart';
-import '../../constants.dart';
-import '../../data/moods.dart';
 
 class JournalScreen extends StatefulWidget {
   const JournalScreen({super.key});
@@ -62,16 +58,9 @@ class _JournalScreenState extends State<JournalScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(16.0),
-              itemCount: entries.length,
+              itemCount: _entries.length,
               itemBuilder: (context, index) {
-                JournalEntry e = entries[index];
-                String dateString = e.createdAt.toIso8601String().split('T').first;
-                return EntryCard(entry: {
-                  'title': e.title,
-                  'description': e.content,
-                  'color': moods[moodState.moodLog[DateTime.utc(e.createdAt.year, e.createdAt.month, e.createdAt.day)]],
-                  'date': '${dateString.substring(5, 7)}/${dateString.substring(8, 10)}/${dateString.substring(0, 4)}',
-                });
+                return EntryCard(entry: _entries[index]);
               },
             ),
           ),
@@ -142,21 +131,19 @@ class SortButton extends StatelessWidget {
               shadowColor: Colors.transparent,
               side: const BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Sort by',
-                  style: GoogleFonts.lexend(
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: themePurple,
-                    ),
+                  style: TextStyle(
+                    color: themePurple,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(width: 5.0),
-                const Icon(Icons.keyboard_arrow_down_rounded, color: themePurple),
+                SizedBox(width: 5.0),
+                Icon(Icons.keyboard_arrow_down_rounded),
               ],
             ),
           ),
@@ -182,21 +169,19 @@ class SortButton extends StatelessWidget {
               shadowColor: Colors.transparent,
               side: const BorderSide(color: Color(0xFFE0E0E0), width: 1.0),
             ),
-            child: Row(
+            child: const Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   'Create',
-                  style: GoogleFonts.lexend(
-                    textStyle: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: themePurple,
-                    ),
+                  style: TextStyle(
+                    color: themePurple,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(width: 5.0),
-                const Icon(Icons.add),
+                SizedBox(width: 5.0),
+                Icon(Icons.add),
               ],
             ),
           ),
@@ -216,14 +201,14 @@ class SortOptions extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            leading: const Icon(Icons.sort_by_alpha, color: themePurple),
+            leading: const Icon(Icons.sort_by_alpha),
             title: const Text('Sort by Mood type'),
             onTap: () {
               // TODO: handle sort by mood
             },
           ),
           ListTile(
-            leading: const Icon(Icons.bookmark, color: themePurple),
+            leading: const Icon(Icons.bookmark),
             title: const Text('Sort by Bookmarks'),
             onTap: () {
               // TODO: handle sort by bookmarks
@@ -234,7 +219,6 @@ class SortOptions extends StatelessWidget {
     );
   }
 }
-
 class EntryCard extends StatefulWidget {
   final JournalEntry entry;
 
@@ -308,7 +292,7 @@ class _EntryCardState extends State<EntryCard> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.bookmark_border, color: themePurple),
+                        icon: const Icon(Icons.bookmark_border, color: Color(0xFF4C4C4C)),
                         onPressed: () {
                           // TODO: handle bookmark press
                         },
@@ -316,12 +300,9 @@ class _EntryCardState extends State<EntryCard> {
                       const SizedBox(height: 8.0),
                       Text(
                         widget.entry.createdAt.toIso8601String().split('T').first,
-                        style: GoogleFonts.lexend(
-                          textStyle: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: themePurple,
-                          ),
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF9E9E9E),
                         ),
                       ),
                     ],
