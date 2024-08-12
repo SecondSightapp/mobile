@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:secondsight/src/ui/screens/loading_screen.dart';
 import '../../data/moods.dart';
 import '../../constants.dart';
 import '../../data/mood_state.dart';
+import '../screens/journal_screen.dart';
 
 final Map<String, String> moodStars = {
   "ANGRY": "assets/images/stars/angry_star.png",
@@ -31,7 +33,7 @@ class Star extends StatelessWidget {
       onTap: () {
         MoodService.addStar(mood.toUpperCase());
         if (isPoppable) {
-          Navigator.pop(context);
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const LoadingScreen()));
         }
       },
       child: Image.asset(

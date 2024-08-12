@@ -19,7 +19,6 @@ class MoodService {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print(response.body);
         final Map<String, dynamic> responseData = json.decode(response.body);
         return responseData['stars'].map<MoodStar>((json) => MoodStar.fromJson(json)).toList();
       } else {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:secondsight/src/ui/screens/entry_display.dart';
 import '../components/journal_popup.dart';
 import '../themes/source_colors.dart';
 import '../../data/journal_entry.dart';
@@ -65,7 +66,9 @@ class _CalendarEntryState extends State<CalendarEntry> {
           side: const BorderSide(color: Color(0xFFE0E0E0)),
         ),
         child: InkWell(
-          
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => EntryDisplay(title: widget.entry.title, content: widget.entry.content)));
+          },
           child: Column(
             children: [
               Padding(

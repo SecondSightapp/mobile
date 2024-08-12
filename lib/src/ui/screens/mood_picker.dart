@@ -1,8 +1,10 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
+import 'package:secondsight/src/ui/components/journal_card.dart';
 import '../themes/source_colors.dart';
 import '../components/navbar.dart';
 import '../components/star.dart';
+import '../screens/journal_screen.dart';
 
 final stars = [
   Star(mood: "SAD", isPoppable: true),
