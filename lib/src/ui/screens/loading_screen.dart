@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:secondsight/main.dart';
 import 'package:secondsight/src/ui/screens/homepage.dart';
 import 'dart:async';
-import '../../data/token.dart';
 
 import 'package:secondsight/src/ui/screens/login.dart';
 
@@ -33,34 +32,14 @@ class _LoadingScreenState extends State<LoadingScreen> {
     });
 
     // navigation to HomePage after 8 seconds
-    // Future.delayed(const Duration(seconds: 10), () {
-    //   if (mounted) {
-    //     debugPrint("navigating to Home");
-    //     Navigator.of(context).pushReplacement(MaterialPageRoute(
-    //       builder: (_) => const MainPage(),
-    //     ));
-    //   }
-    // });
-
-    _redirect();
-  }
-
-  Future<bool> isUserAuthenticated() async {
-    final token = userToken;
-    return token.isNotEmpty;
-  }
-
-  Future<void> _redirect() async {
-    await Future.delayed(const Duration(seconds: 5));
-    if (await isUserAuthenticated()) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const MainPage()),
-        );
-      } else {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-        );
+    Future.delayed(const Duration(seconds: 10), () {
+      if (mounted) {
+        debugPrint("navigating to Home");
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => const MainPage(),
+        ));
       }
+    });
   }
 
   @override
