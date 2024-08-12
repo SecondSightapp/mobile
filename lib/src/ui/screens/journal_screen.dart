@@ -300,9 +300,12 @@ class _EntryCardState extends State<EntryCard> {
                       const SizedBox(height: 8.0),
                       Text(
                         widget.entry.createdAt.toIso8601String().split('T').first,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF9E9E9E),
+                        style: GoogleFonts.lexend(
+                          textStyle: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: themePurple,
+                          ),
                         ),
                       ),
                     ],
