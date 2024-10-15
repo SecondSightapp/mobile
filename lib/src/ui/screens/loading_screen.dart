@@ -31,8 +31,6 @@ class _LoadingScreenState extends State<LoadingScreen> {
       });
     });
 
-    // asdfasdfasdfasdfasdf
-
     // navigation to HomePage after 8 seconds
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
